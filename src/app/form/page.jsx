@@ -19,6 +19,14 @@ const FormLayout = () => {
   };
   const [loading, setLoading] = useState(false);
 
+  //  const [timeInType, setTimeInType] = useState("text");
+  //  const handleTimeInFocus = () => {
+  //    setTimeInType("time");
+  //  };
+  //  const handleTimeInBlur = () => {
+  //    setTimeInType("text");
+  //  };
+
   const validationSchema = Yup.object().shape({
     childName: Yup.string().required("Child's name is required"),
     guardianName: Yup.string().required("Guardian's name is required"),
@@ -51,7 +59,7 @@ const FormLayout = () => {
       <ToastContainer />
       <div className="mx-auto mt-8 max-w-lg">
         <h2 className="text-gray-800 mb-4 text-center text-2xl font-bold">
-          Child Information Form
+          Consent Form
         </h2>
         <div className="mb-4 rounded bg-white px-8 pb-8 pt-6 shadow-md">
           <Formik
@@ -78,7 +86,7 @@ const FormLayout = () => {
                   <ErrorMessage
                     name="childName"
                     component="p"
-                    className="text-red text-xs italic"
+                    className="text-xs italic text-red"
                   />
                 </div>
 
@@ -99,7 +107,7 @@ const FormLayout = () => {
                   <ErrorMessage
                     name="guardianName"
                     component="p"
-                    className="text-red text-xs italic"
+                    className="text-xs italic text-red"
                   />
                 </div>
 
@@ -119,7 +127,7 @@ const FormLayout = () => {
                   <ErrorMessage
                     name="dob"
                     component="p"
-                    className="text-red text-xs italic"
+                    className="text-red-500 mt-1 text-xs italic"
                   />
                 </div>
 
@@ -140,7 +148,7 @@ const FormLayout = () => {
                   <ErrorMessage
                     name="phoneNumber"
                     component="p"
-                    className="text-red text-xs italic"
+                    className="text-xs italic text-red"
                   />
                 </div>
 
@@ -162,7 +170,7 @@ const FormLayout = () => {
                   <ErrorMessage
                     name="address"
                     component="p"
-                    className="text-red text-xs italic"
+                    className="text-xs italic text-red"
                   />
                 </div>
 
@@ -178,12 +186,13 @@ const FormLayout = () => {
                       type="time"
                       id="timeIn"
                       name="timeIn"
+                      title="Enter time in HH:MM format"
                       className="form-input border-gray-300 mt-1 block w-full rounded-md px-3 py-2 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50"
                     />
                     <ErrorMessage
                       name="timeIn"
                       component="p"
-                      className="text-red text-xs italic"
+                      className="text-xs italic text-red"
                     />
                   </div>
 
@@ -198,12 +207,13 @@ const FormLayout = () => {
                       type="time"
                       id="timeOut"
                       name="timeOut"
+                      placeholder="Select Time Out"
                       className="form-input border-gray-300 mt-1 block w-full rounded-md px-3 py-2 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50"
                     />
                     <ErrorMessage
                       name="timeOut"
                       component="p"
-                      className="text-red text-xs italic"
+                      className="text-xs italic text-red"
                     />
                   </div>
                 </div>
