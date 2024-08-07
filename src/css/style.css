@@ -238,6 +238,26 @@ input[type="search"]::-webkit-search-cancel-button {
     background-size: 20px;
 }
 
+/* Apply these styles globally or specifically to your form */
+input[type="date"] {
+    -webkit-appearance: none;
+    /* Remove default styling in WebKit browsers (Chrome, Safari) */
+    -moz-appearance: none;
+    /* Remove default styling in Firefox */
+    appearance: none;
+    /* Remove default styling in other browsers */
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    color: transparent;
+    /* Hide the default calendar icon */
+}
+
+input[type="date"]::-webkit-inner-spin-button {
+    display: none;
+    /* Hide the default spinner in WebKit browsers */
+}
+
 [x-cloak] {
     display: none !important;
 }
