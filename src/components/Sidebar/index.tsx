@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import SidebarItem from "@/components/Sidebar/SidebarItem";
 import ClickOutside from "@/components/ClickOutside";
 import useLocalStorage from "@/hooks/useLocalStorage";
@@ -29,41 +29,7 @@ interface MenuGroup {
 const menuGroups: MenuGroup[] = [
   {
     name: "MENU",
-    menuItems: [
-      {
-        icon: (
-          <svg
-            className="fill-current"
-            width="18"
-            height="18"
-            viewBox="0 0 18 18"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          ></svg>
-        ),
-        label: "Dashboard",
-        route: "/",
-        adminOnly: true,
-        managerOnly: true,
-        employeeOnly: true,
-      },
-      {
-        icon: (
-          <svg
-            className="fill-current"
-            width="18"
-            height="18"
-            viewBox="0 0 18 18"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          ></svg>
-        ),
-        label: "Calendar",
-        route: "/calendar",
-        adminOnly: true,
-        managerOnly: true,
-        employeeOnly: true,
-      },
+    menuItems: [      
       {
         icon: (
           <svg
@@ -86,57 +52,6 @@ const menuGroups: MenuGroup[] = [
           <svg
             className="fill-current"
             width="18"
-            height="18"
-            viewBox="0 0 18 18"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          ></svg>
-        ),
-        label: "Attendence",
-        route: "/attendence",
-        adminOnly: true,
-        managerOnly: true,
-        employeeOnly: true,
-      },
-      {
-        icon: (
-          <svg
-            className="fill-current"
-            width="18"
-            height="18"
-            viewBox="0 0 18 18"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          ></svg>
-        ),
-        label: "Forms",
-        route: "#",
-        children: [
-          {
-            label: "Add Employee",
-            route: "/forms/form-layout",
-            icon: (
-              <svg
-                className="fill-current"
-                width="18"
-                height="18"
-                viewBox="0 0 18 18"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              ></svg>
-            ),
-            adminOnly: true,
-          },
-        ],
-        adminOnly: true,
-        managerOnly: true,
-        employeeOnly: true,
-      },
-      {
-        icon: (
-          <svg
-            className="fill-current"
-            width="18"
             height="19"
             viewBox="0 0 18 19"
             fill="none"
@@ -149,57 +64,6 @@ const menuGroups: MenuGroup[] = [
         managerOnly: true,
         employeeOnly: true,
       },
-      {
-        icon: (
-          <svg
-            className="fill-current"
-            width="18"
-            height="19"
-            viewBox="0 0 18 19"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          ></svg>
-        ),
-        label: "Leave",
-        route: "/leave",
-        adminOnly: true,
-        managerOnly: true,
-        employeeOnly: true,
-      },
-      {
-        icon: (
-          <svg
-            className="fill-current"
-            width="18"
-            height="19"
-            viewBox="0 0 18 19"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          ></svg>
-        ),
-        label: "Task",
-        route: "/task",
-        adminOnly: true,
-        managerOnly: true,
-        employeeOnly: true,
-      },
-      {
-        icon: (
-          <svg
-            className="fill-current"
-            width="18"
-            height="19"
-            viewBox="0 0 18 19"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          ></svg>
-        ),
-        label: "Tasks",
-        route: "/tasks-user",
-        adminOnly: true,
-        managerOnly: true,
-        employeeOnly: true,
-      },
     ],
   },
 ];
@@ -208,6 +72,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   const [dataUser, setDataUser] = useState<string>("");
   const [pageName, setPageName] = useLocalStorage("selectedMenu", "dashboard");
   const [loading, setLoading] = useState<boolean>(true);
+  const router = useRouter();
 
    useEffect(() => {
     const fetchData = async () => {
@@ -244,15 +109,22 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
       break;
   }
 
+   const handleHeadingClick = () => {
+     router.push("/"); // Change '/dashboard' to the desired route
+   };
+
   return (
     <ClickOutside onClick={() => setSidebarOpen(false)}>
       <aside
-        className={`fixed left-0 top-0 z-9999 flex h-screen w-72.5 flex-col overflow-y-hidden bg-black duration-300 ease-linear dark:bg-boxdark lg:translate-x-0 ${
+        className={`fixed left-0 top-0 z-9999 flex h-screen w-72.5 flex-col overflow-y-hidden bg-rose-900 duration-300 ease-linear dark:bg-boxdark lg:translate-x-0 ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
         <div className="flex items-center justify-between gap-2 px-6 py-5.5 lg:py-6.5">
-          <h1 className="animate-line3 text-2xl font-semibold text-white dark:text-white">
+          <h1
+            className="animate-line3 cursor-pointer text-2xl font-semibold text-white dark:text-white"
+            onClick={handleHeadingClick} 
+          >
             {dashboardHeading}
           </h1>
           <button
@@ -274,8 +146,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
         {/* Sidebar menu */}
         <div className="no-scrollbar flex flex-col overflow-y-auto duration-300 ease-linear">
           <nav className="mt-5 px-4 py-4 lg:mt-9 lg:px-6">
-             {loading ? (
-              <div className="flex items-center justify-center h-full">
+            {loading ? (
+              <div className="flex h-full items-center justify-center">
                 <ThreeDots
                   visible={true}
                   height="80"
@@ -288,44 +160,44 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 />
               </div>
             ) : (
-            menuGroups.map((group, groupIndex) => (
-              <div key={groupIndex}>
-                <h3 className="mb-4 ml-4 text-sm font-semibold text-bodydark2">
-                  {group.name}
-                </h3>
-                <ul className="mb-6 flex flex-col gap-1.5">
-                  {group.menuItems
-                    .filter((menuItem) => {
-                      if (dataUser === "admin") {
-                        return (
-                          menuItem.label !== "Attendence" &&
-                          menuItem.label !== "Tasks"
-                        );
-                      } else if (
-                        dataUser === "manager" ||
-                        dataUser === "employee"
-                      ) {
-                        return (
-                          menuItem.label === "Dashboard" ||
-                          menuItem.label === "Calendar" ||
-                          menuItem.label === "Profile" ||
-                          menuItem.label === "Attendence" ||
-                          menuItem.label === "Tasks"
-                        );
-                      }
-                      return false;
-                    })
-                    .map((menuItem, menuIndex) => (
-                      <SidebarItem
-                        key={menuIndex}
-                        item={menuItem}
-                        pageName={pageName}
-                        setPageName={setPageName}
-                      />
-                    ))}
-                </ul>
-              </div>
-            ))
+              menuGroups.map((group, groupIndex) => (
+                <div key={groupIndex}>
+                  <h3 className="mb-4 ml-4 text-sm font-semibold text-bodydark2">
+                    {group.name}
+                  </h3>
+                  <ul className="mb-6 flex flex-col gap-1.5">
+                    {group.menuItems
+                      .filter((menuItem) => {
+                        if (dataUser === "admin") {
+                          return (
+                            menuItem.label !== "Attendence" &&
+                            menuItem.label !== "Tasks"
+                          );
+                        } else if (
+                          dataUser === "manager" ||
+                          dataUser === "employee"
+                        ) {
+                          return (
+                            menuItem.label === "Dashboard" ||
+                            menuItem.label === "Calendar" ||
+                            menuItem.label === "Profile" ||
+                            menuItem.label === "Attendence" ||
+                            menuItem.label === "Tasks"
+                          );
+                        }
+                        return false;
+                      })
+                      .map((menuItem, menuIndex) => (
+                        <SidebarItem
+                          key={menuIndex}
+                          item={menuItem}
+                          pageName={pageName}
+                          setPageName={setPageName}
+                        />
+                      ))}
+                  </ul>
+                </div>
+              ))
             )}
           </nav>
         </div>

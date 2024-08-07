@@ -13,7 +13,6 @@ export function middleware(request) {
     "/",
     "/calendar",
     "/profile",
-    "/forms/form-layout",
     "/tables",
     "/settings",
   ];
@@ -77,7 +76,6 @@ export const config = {
     "/login",
     "/calendar",
     "/profile",
-    "/forms/form-layout",
     "/tables",
     "/settings",
     "/manager-dashboard",

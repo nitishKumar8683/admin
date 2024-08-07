@@ -60,8 +60,6 @@ const FormLayout = () => {
     }
   };
   return (
-    <DefaultLayout>
-      {/* <Breadcrumb pageName="FormLayout" /> */}
 
       <div className="grid grid-cols-1 gap-12 sm:grid-cols-1">
         {/* <div className="flex flex-col gap-9">
@@ -366,12 +364,12 @@ const FormLayout = () => {
                           >
                             Select Role
                           </option>
-                          {/* <option
+                          <option
                                                         value="admin"
                                                         className="text-body dark:text-bodydark"
                                                     >
                                                         Admin
-                                                    </option> */}
+                                                    </option> 
                           <option
                             value="manager"
                             className="text-body dark:text-bodydark"
@@ -420,7 +418,6 @@ const FormLayout = () => {
           </div>
         </div>
       </div>
-    </DefaultLayout>
   );
 };
 
