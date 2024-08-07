@@ -195,8 +195,8 @@ const FormLayout = () => {
                   />
                 </div>
 
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="mb-4">
+                <div className="flex gap-4">
+                  <div className="mb-4 flex-1">
                     <label
                       htmlFor="timeIn"
                       className="text-gray-700 mb-2 block text-sm font-bold"
@@ -217,7 +217,7 @@ const FormLayout = () => {
                     />
                   </div>
 
-                  <div className="mb-4">
+                  <div className="mb-4 flex-1">
                     <label
                       htmlFor="timeOut"
                       className="text-gray-700 mb-2 block text-sm font-bold"
