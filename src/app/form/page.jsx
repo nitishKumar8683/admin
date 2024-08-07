@@ -113,27 +113,6 @@ const FormLayout = () => {
 
                 <div className="mb-4">
                   <label
-                    htmlFor="guardianName"
-                    className="text-gray-700 mb-2 block text-sm font-bold"
-                  >
-                    Date of Birth (DOB)
-                  </label>
-                  <Field
-                    type="date"
-                    id="guardianName"
-                    name="guardianName"
-                    placeholder="Enter parent/guardian's name"
-                    className="form-input border-gray-300 mt-1 block w-full rounded-md px-3 py-2 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50"
-                  />
-                  <ErrorMessage
-                    name="guardianName"
-                    component="p"
-                    className="text-xs italic text-red"
-                  />
-                </div>
-
-                <div className="mb-4">
-                  <label
                     htmlFor="dob"
                     className="text-gray-700 mb-2 block text-sm font-bold"
                   >
@@ -195,8 +174,8 @@ const FormLayout = () => {
                   />
                 </div>
 
-                <div className="flex gap-4">
-                  <div className="mb-4 flex-1">
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="mb-4">
                     <label
                       htmlFor="timeIn"
                       className="text-gray-700 mb-2 block text-sm font-bold"
@@ -217,7 +196,7 @@ const FormLayout = () => {
                     />
                   </div>
 
-                  <div className="mb-4 flex-1">
+                  <div className="mb-4">
                     <label
                       htmlFor="timeOut"
                       className="text-gray-700 mb-2 block text-sm font-bold"
