@@ -128,8 +128,8 @@ const TableThree = () => {
       )}
 
       {isModalOpen && userDetails && (
-        <div className="bg-gray-500 mt-20 fixed inset-0 flex items-center justify-center bg-opacity-50 p-4 backdrop-blur-lg backdrop-filter">
-          <div className="relative w-full max-w-md rounded-lg bg-white p-4 shadow-lg">
+        <div className="bg-gray-500 fixed inset-0 flex items-center justify-center bg-opacity-50 p-4 backdrop-blur-lg backdrop-filter">
+          <div className="relative h-[80vh] max-h-full w-full max-w-lg overflow-y-auto rounded-lg bg-white p-4 shadow-lg">
             <button
               onClick={() => setIsModalOpen(false)}
               className="text-gray-600 hover:text-gray-800 absolute right-2 top-2"
@@ -232,7 +232,7 @@ const TableThree = () => {
                     Parent/Guardian&apos;s Name
                   </th>
                   <th className="px-4 py-2 font-medium text-black dark:text-white">
-                    Date of Birth (mm/dd/yy)
+                    Date of Birth
                   </th>
                   <th className="px-4 py-2 font-medium text-black dark:text-white">
                     Actions
@@ -283,8 +283,8 @@ const TableThree = () => {
       </div>
 
       {isModalOpenEdit && editUser && (
-        <div className="bg-gray-500 mt-20 fixed inset-0 flex items-center justify-center bg-opacity-50 p-4 backdrop-blur-lg backdrop-filter">
-          <div className="relative w-full max-w-md rounded-lg bg-white p-4 shadow-lg">
+        <div className="bg-gray-500 fixed inset-0 flex items-center justify-center bg-opacity-50 p-4 backdrop-blur-lg backdrop-filter">
+          <div className="relative h-[80vh] max-h-full w-full max-w-lg overflow-y-auto rounded-lg bg-white p-4 shadow-lg">
             <button
               onClick={() => setIsModalOpenEdit(false)}
               className="text-gray-600 hover:text-gray-800 absolute right-2 top-2"
