@@ -128,8 +128,8 @@ const TableThree = () => {
       )}
 
       {isModalOpen && userDetails && (
-        <div className="bg-gray-500 fixed inset-0 flex items-center justify-center bg-opacity-50 p-4 backdrop-blur-lg backdrop-filter">
-          <div className="relative max-h-[80vh] w-full max-w-lg overflow-y-auto rounded-lg bg-white p-4 shadow-lg">
+        <div className="bg-gray-500 fixed inset-0 z-50 flex items-center justify-center bg-opacity-50 backdrop-blur-lg backdrop-filter">
+          <div className="relative mt-16 max-h-[80vh] w-full max-w-lg overflow-y-auto rounded-lg bg-white p-4 shadow-lg">
             <button
               onClick={() => setIsModalOpen(false)}
               className="text-gray-600 hover:text-gray-800 absolute right-2 top-2"
@@ -285,7 +285,7 @@ const TableThree = () => {
 
       {/* Edit Modal */}
       {isModalOpenEdit && editUser && (
-        <div className="bg-gray-500 fixed inset-0 flex items-center justify-center bg-opacity-50 p-4 backdrop-blur-lg backdrop-filter">
+        <div className="bg-gray-500 fixed inset-0 flex items-end justify-center bg-opacity-50 p-4 backdrop-blur-lg backdrop-filter">
           <div className="relative max-h-[80vh] w-full max-w-lg overflow-y-auto rounded-lg bg-white p-4 shadow-lg">
             <button
               onClick={() => setIsModalOpenEdit(false)}
