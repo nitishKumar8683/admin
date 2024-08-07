@@ -222,62 +222,63 @@ const TableThree = () => {
               />
             </div>
           ) : (
-            <table className="w-full table-auto">
-              <thead>
-                <tr className="bg-gray-200 text-left dark:bg-meta-4">
-                  <th className="px-4 py-2 font-medium text-black dark:text-white">
-                    Child Name
-                  </th>
-                  <th className="px-4 py-2 font-medium text-black dark:text-white">
-                    Parent/Guardian&apos;s Name
-                  </th>
-                  <th className="px-4 py-2 font-medium text-black dark:text-white">
-                    Date of Birth
-                  </th>
-                  <th className="px-4 py-2 font-medium text-black dark:text-white">
-                    Actions
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {userData.map((data) => (
-                  <tr key={data._id}>
-                    <td className="border-gray-200 border-b px-4 py-2">
-                      {data.childName}
-                    </td>
-                    <td className="border-gray-200 border-b px-4 py-2">
-                      {data.guardianName}
-                    </td>
-                    <td className="border-gray-200 border-b px-4 py-2">
-                      {formatDate(data.dob)}
-                    </td>
-                    <td className="border-gray-200 border-b px-4 py-2">
-                      <button
-                        onClick={() => getUserDetailsById(data._id)}
-                        className="mr-2 text-blue-500 hover:underline"
-                        disabled={actionLoading[`view-${data._id}`]}
-                      >
-                        <FaEye className="inline" />
-                      </button>
-                      <button
-                        onClick={() => getUserById(data._id)}
-                        className="mr-2 text-green-500 hover:underline"
-                        disabled={actionLoading[`edit-${data._id}`]}
-                      >
-                        <FaEdit className="inline" />
-                      </button>
-                      <button
-                        onClick={() => deleteUser(data._id)}
-                        className="text-red-500 hover:underline"
-                        disabled={actionLoading[`delete-${data._id}`]}
-                      >
-                        <MdDeleteOutline className="inline" />
-                      </button>
-                    </td>
+            <div className="relative">
+              <table className="w-full table-auto">
+                <thead className="bg-gray-200 sticky top-0 dark:bg-meta-4">
+                  <tr className="text-left">
+                    <th className="px-4 py-2 font-medium text-black dark:text-white">
+                      Child Name
+                    </th>
+                    <th className="px-4 py-2 font-medium text-black dark:text-white">
+                      Parent/Guardian&apos;s Name
+                    </th>
+                    <th className="px-4 py-2 font-medium text-black dark:text-white">
+                      Date of Birth
+                    </th>
+                    <th className="px-4 py-2 font-medium text-black dark:text-white">
+                      Actions
+                    </th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody className="block h-64 overflow-y-scroll">
+                  {userData.map((data) => (
+                    <tr
+                      key={data._id}
+                      className="border-gray-200 flex w-full border-b"
+                    >
+                      <td className="flex-1 px-4 py-2">{data.childName}</td>
+                      <td className="flex-1 px-4 py-2">{data.guardianName}</td>
+                      <td className="flex-1 px-4 py-2">
+                        {formatDate(data.dob)}
+                      </td>
+                      <td className="flex-1 px-4 py-2">
+                        <button
+                          onClick={() => getUserDetailsById(data._id)}
+                          className="mr-2 text-blue-500 hover:underline"
+                          disabled={actionLoading[`view-${data._id}`]}
+                        >
+                          <FaEye className="inline" />
+                        </button>
+                        <button
+                          onClick={() => getUserById(data._id)}
+                          className="mr-2 text-green-500 hover:underline"
+                          disabled={actionLoading[`edit-${data._id}`]}
+                        >
+                          <FaEdit className="inline" />
+                        </button>
+                        <button
+                          onClick={() => deleteUser(data._id)}
+                          className="text-red-500 hover:underline"
+                          disabled={actionLoading[`delete-${data._id}`]}
+                        >
+                          <MdDeleteOutline className="inline" />
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           )}
         </div>
       </div>
