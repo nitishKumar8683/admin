@@ -129,7 +129,7 @@ const TableThree = () => {
 
       {isModalOpen && userDetails && (
         <div className="bg-gray-500 fixed inset-0 flex items-center justify-center bg-opacity-50 p-4 backdrop-blur-lg backdrop-filter">
-          <div className="relative h-[80vh] max-h-full w-full max-w-lg overflow-y-auto rounded-lg bg-white p-4 shadow-lg">
+          <div className="relative max-h-[80vh] w-full max-w-lg overflow-y-auto rounded-lg bg-white p-4 shadow-lg">
             <button
               onClick={() => setIsModalOpen(false)}
               className="text-gray-600 hover:text-gray-800 absolute right-2 top-2"
@@ -230,48 +230,48 @@ const TableThree = () => {
                       Child Name
                     </th>
                     <th className="px-4 py-2 font-medium text-black dark:text-white">
-                      Parent/Guardian&apos;s Name
-                    </th>
-                    <th className="px-4 py-2 font-medium text-black dark:text-white">
-                      Date of Birth
+                      Date of Birth (DOB)
                     </th>
                     <th className="px-4 py-2 font-medium text-black dark:text-white">
                       Actions
                     </th>
                   </tr>
                 </thead>
-                <tbody className="block h-64 overflow-y-scroll">
-                  {userData.map((data) => (
+                <tbody>
+                  {userData.map((user) => (
                     <tr
-                      key={data._id}
-                      className="border-gray-200 flex w-full border-b"
+                      key={user._id}
+                      className="border-t border-stroke dark:border-strokedark"
                     >
-                      <td className="flex-1 px-4 py-2">{data.childName}</td>
-                      <td className="flex-1 px-4 py-2">{data.guardianName}</td>
-                      <td className="flex-1 px-4 py-2">
-                        {formatDate(data.dob)}
+                      <td className="px-4 py-2 text-black dark:text-white">
+                        {user.childName}
                       </td>
-                      <td className="flex-1 px-4 py-2">
+                      <td className="px-4 py-2 text-black dark:text-white">
+                        {formatDate(user.dob)}
+                      </td>
+                      <td className="px-4 py-2">
                         <button
-                          onClick={() => getUserDetailsById(data._id)}
-                          className="mr-2 text-blue-500 hover:underline"
-                          disabled={actionLoading[`view-${data._id}`]}
+                          onClick={() => getUserDetailsById(user._id)}
+                          className="mr-2 text-blue-500 hover:text-blue-700"
                         >
-                          <FaEye className="inline" />
+                          <FaEye />
                         </button>
                         <button
-                          onClick={() => getUserById(data._id)}
-                          className="mr-2 text-green-500 hover:underline"
-                          disabled={actionLoading[`edit-${data._id}`]}
+                          onClick={() => getUserById(user._id)}
+                          className="mr-2 text-yellow-500 hover:text-yellow-700"
                         >
-                          <FaEdit className="inline" />
+                          <FaEdit />
                         </button>
                         <button
-                          onClick={() => deleteUser(data._id)}
-                          className="text-red-500 hover:underline"
-                          disabled={actionLoading[`delete-${data._id}`]}
+                          onClick={() => deleteUser(user._id)}
+                          className="text-red-500 hover:text-red-700"
+                          disabled={actionLoading[`delete-${user._id}`]}
                         >
-                          <MdDeleteOutline className="inline" />
+                          {actionLoading[`delete-${user._id}`] ? (
+                            <ClipLoader size={24} color="#ff0000" />
+                          ) : (
+                            <MdDeleteOutline />
+                          )}
                         </button>
                       </td>
                     </tr>
@@ -283,9 +283,10 @@ const TableThree = () => {
         </div>
       </div>
 
+      {/* Edit Modal */}
       {isModalOpenEdit && editUser && (
         <div className="bg-gray-500 fixed inset-0 flex items-center justify-center bg-opacity-50 p-4 backdrop-blur-lg backdrop-filter">
-          <div className="relative h-[80vh] max-h-full w-full max-w-lg overflow-y-auto rounded-lg bg-white p-4 shadow-lg">
+          <div className="relative max-h-[80vh] w-full max-w-lg overflow-y-auto rounded-lg bg-white p-4 shadow-lg">
             <button
               onClick={() => setIsModalOpenEdit(false)}
               className="text-gray-600 hover:text-gray-800 absolute right-2 top-2"
@@ -311,7 +312,7 @@ const TableThree = () => {
                   </label>
                   <input
                     type="text"
-                    value={editUser.childName || ""}
+                    value={editUser.childName}
                     onChange={(e) =>
                       setEditUser({ ...editUser, childName: e.target.value })
                     }
@@ -339,7 +340,7 @@ const TableThree = () => {
                   </label>
                   <input
                     type="text"
-                    value={editUser.guardianName || ""}
+                    value={editUser.guardianName}
                     onChange={(e) =>
                       setEditUser({ ...editUser, guardianName: e.target.value })
                     }
@@ -353,7 +354,7 @@ const TableThree = () => {
                   </label>
                   <input
                     type="text"
-                    value={editUser.phoneNumber || ""}
+                    value={editUser.phoneNumber}
                     onChange={(e) =>
                       setEditUser({ ...editUser, phoneNumber: e.target.value })
                     }
@@ -367,7 +368,7 @@ const TableThree = () => {
                   </label>
                   <input
                     type="text"
-                    value={editUser.timeIn || ""}
+                    value={editUser.timeIn}
                     onChange={(e) =>
                       setEditUser({ ...editUser, timeIn: e.target.value })
                     }
@@ -381,7 +382,7 @@ const TableThree = () => {
                   </label>
                   <input
                     type="text"
-                    value={editUser.timeOut || ""}
+                    value={editUser.timeOut}
                     onChange={(e) =>
                       setEditUser({ ...editUser, timeOut: e.target.value })
                     }
@@ -395,7 +396,7 @@ const TableThree = () => {
                   </label>
                   <input
                     type="text"
-                    value={editUser.address || ""}
+                    value={editUser.address}
                     onChange={(e) =>
                       setEditUser({ ...editUser, address: e.target.value })
                     }
@@ -409,11 +410,12 @@ const TableThree = () => {
                   type="submit"
                   className="rounded-md bg-blue-500 px-4 py-2 text-white hover:bg-blue-700"
                 >
-                  Save Changes
+                  Save
                 </button>
                 <button
+                  type="button"
                   onClick={() => setIsModalOpenEdit(false)}
-                  className="bg-gray-500 hover:bg-gray-700 ml-2 rounded-md px-4 py-2 text-white"
+                  className="bg-gray-300 hover:bg-gray-500 ml-2 rounded-md px-4 py-2 text-black"
                 >
                   Cancel
                 </button>
