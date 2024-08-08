@@ -5,6 +5,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ClipLoader from "react-spinners/ClipLoader";
 import { format } from "date-fns";
+import './form.css'; 
 
 const FormLayout = () => {
   const [formData, setFormData] = useState({
@@ -74,16 +75,12 @@ const FormLayout = () => {
   return (
     <>
       <ToastContainer />
-      <div className="mx-auto mt-8 max-w-lg">
-        <h2 className="text-gray-800 mb-4 text-center text-2xl font-bold">
-          Consent Form
-        </h2>
-        <div className="mb-4 rounded bg-white px-8 pb-8 pt-6 shadow-md">
+      <div className="container">
+        <h2 className="header">Consent Form</h2>
+        <div className="form-container">
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
-              <label className="mb-3 block text-sm font-medium text-black dark:text-white">
-                Child Name
-              </label>
+              <label className="label">Child Name</label>
               <input
                 type="text"
                 id="childName"
@@ -93,24 +90,19 @@ const FormLayout = () => {
                 onChange={(e) =>
                   setFormData({ ...formData, childName: e.target.value })
                 }
-                className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                className="input"
               />
               {errors.childName && (
-                <p className="text-red text-xs italic">
-                  {errors.childName}
-                </p>
+                <p className="error-text">{errors.childName}</p>
               )}
             </div>
 
             <div className="mb-4">
-              <label className="mb-3 block text-sm font-medium text-black dark:text-white">
-                Date of Birth (DOB)
-              </label>
+              <label className="label">Date of Birth (DOB)</label>
               <div className="relative">
                 <input
                   type="date"
-                  className="form-datepicker w-full rounded border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
-                  data-class="flatpickr-right"
+                  className="input"
                   id="dob"
                   name="dob"
                   placeholder="mm/dd/yyyy"
@@ -123,15 +115,11 @@ const FormLayout = () => {
                   {/* Date picker icon */}
                 </div>
               </div>
-              {errors.dob && (
-                <p className="text-red text-xs italic">{errors.dob}</p>
-              )}
+              {errors.dob && <p className="error-text">{errors.dob}</p>}
             </div>
 
             <div className="mb-4">
-              <label className="mb-3 block text-sm font-medium text-black dark:text-white">
-                Guardian Name
-              </label>
+              <label className="label">Guardian Name</label>
               <input
                 type="text"
                 id="guardianName"
@@ -141,19 +129,15 @@ const FormLayout = () => {
                 onChange={(e) =>
                   setFormData({ ...formData, guardianName: e.target.value })
                 }
-                className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                className="input"
               />
               {errors.guardianName && (
-                <p className="text-red text-xs italic">
-                  {errors.guardianName}
-                </p>
+                <p className="error-text">{errors.guardianName}</p>
               )}
             </div>
 
             <div className="mb-4">
-              <label className="mb-3 block text-sm font-medium text-black dark:text-white">
-                Phone Number
-              </label>
+              <label className="label">Phone Number</label>
               <input
                 type="text"
                 id="phoneNumber"
@@ -163,19 +147,15 @@ const FormLayout = () => {
                 onChange={(e) =>
                   setFormData({ ...formData, phoneNumber: e.target.value })
                 }
-                className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                className="input"
               />
               {errors.phoneNumber && (
-                <p className="text-red text-xs italic">
-                  {errors.phoneNumber}
-                </p>
+                <p className="error-text">{errors.phoneNumber}</p>
               )}
             </div>
 
             <div className="mb-4">
-              <label className="mb-3 block text-sm font-medium text-black dark:text-white">
-                Address
-              </label>
+              <label className="label">Address</label>
               <input
                 type="text"
                 id="address"
@@ -185,18 +165,14 @@ const FormLayout = () => {
                 onChange={(e) =>
                   setFormData({ ...formData, address: e.target.value })
                 }
-                className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                className="input"
               />
-              {errors.address && (
-                <p className="text-red text-xs italic">{errors.address}</p>
-              )}
+              {errors.address && <p className="error-text">{errors.address}</p>}
             </div>
 
-            <div className="mb-4 flex gap-4">
-              <div className="w-1/2">
-                <label className="mb-3 block text-sm font-medium text-black dark:text-white">
-                  Time In
-                </label>
+            <div className="flex-container">
+              <div className="half-width">
+                <label className="label">Time In</label>
                 <input
                   type="time"
                   id="timeIn"
@@ -205,16 +181,12 @@ const FormLayout = () => {
                   onChange={(e) =>
                     setFormData({ ...formData, timeIn: e.target.value })
                   }
-                  className="w-full rounded border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                  className="input"
                 />
-                {errors.timeIn && (
-                  <p className="text-red text-xs italic">{errors.timeIn}</p>
-                )}
+                {errors.timeIn && <p className="error-text">{errors.timeIn}</p>}
               </div>
-              <div className="w-1/2">
-                <label className="mb-3 block text-sm font-medium text-black dark:text-white">
-                  Time Out
-                </label>
+              <div className="half-width">
+                <label className="label">Time Out</label>
                 <input
                   type="time"
                   id="timeOut"
@@ -223,20 +195,19 @@ const FormLayout = () => {
                   onChange={(e) =>
                     setFormData({ ...formData, timeOut: e.target.value })
                   }
-                  className="w-full rounded border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                  className="input"
                 />
                 {errors.timeOut && (
-                  <p className="text-red text-xs italic">
-                    {errors.timeOut}
-                  </p>
+                  <p className="error-text">{errors.timeOut}</p>
                 )}
               </div>
             </div>
 
-            <div className="flex justify-end">
+            <div className="button-container">
               <button
                 type="submit"
-                className="hover:bg-primary-dark rounded bg-primary px-6 py-3 text-white transition"
+                className="submit-button"
+                disabled={loading}
               >
                 {loading ? <ClipLoader color="#ffffff" size={20} /> : "Submit"}
               </button>
@@ -249,3 +220,4 @@ const FormLayout = () => {
 };
 
 export default FormLayout;
+
