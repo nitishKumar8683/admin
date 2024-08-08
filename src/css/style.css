@@ -115,6 +115,7 @@
 
 .flatpickr-calendar {
     @apply !p-6 dark:!bg-boxdark dark:!text-bodydark dark:!shadow-8 2xsm:!w-auto;
+    margin-top: -50px;
 }
 
 .flatpickr-day {
