@@ -4,9 +4,12 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ClipLoader from "react-spinners/ClipLoader";
-import DatePicker from "react-date-picker"; // Import react-date-picker
-import "react-date-picker/dist/DatePicker.css"; // DatePicker CSS
-import "./form.css"; // Import the CSS file
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css"; // Import DatePicker CSS
+import "@fortawesome/fontawesome-free/css/all.min.css"; // Import Font Awesome CSS
+import "./form.css"; 
+import { format } from "date-fns";
+
 
 const FormLayout = () => {
   const [formData, setFormData] = useState({
@@ -15,7 +18,7 @@ const FormLayout = () => {
     phoneNumber: "",
     address: "",
     timeIn: "",
-    dob: new Date(), // Initialize with current date or null
+    dob: null, // Initialize with null
     timeOut: "",
   });
   const [errors, setErrors] = useState({});
@@ -59,7 +62,7 @@ const FormLayout = () => {
           phoneNumber: "",
           address: "",
           timeIn: "",
-          dob: new Date(),
+          dob: null,
           timeOut: "",
         });
         setErrors({});
@@ -105,9 +108,9 @@ const FormLayout = () => {
                   className="date-picker-input input-height"
                   id="dob"
                   name="dob"
-                  value={formData.dob}
+                  selected={formData.dob}
                   onChange={(date) => setFormData({ ...formData, dob: date })}
-                  format="MM/dd/yyyy" // Set the date format
+                  dateFormat="MM/dd/yyyy"
                   placeholderText="mm/dd/yyyy"
                 />
                 <i className="calendar-icon fas fa-calendar-alt"></i>
