@@ -108,7 +108,7 @@ const FormLayout = () => {
               <div className="relative">
                 <input
                   type="date"
-                  className=" w-full rounded border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                  className="form-datepicker w-full rounded border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                   data-class="flatpickr-right"
                   id="dob"
                   name="dob"
