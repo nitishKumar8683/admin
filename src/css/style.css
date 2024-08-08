@@ -261,3 +261,13 @@ input[type="date"]::-webkit-inner-spin-button {
 [x-cloak] {
     display: none !important;
 }
+
+/* Ensure that mobile-specific styles are applied only on small screens */
+@media (max-width: 640px) {
+    .custom-mobile-input {
+        padding: 0.75rem;
+        /* Increase padding for better touch targets */
+        font-size: 1.125rem;
+        /* Adjust font size if needed */
+    }
+}
