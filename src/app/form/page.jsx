@@ -4,10 +4,8 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ClipLoader from "react-spinners/ClipLoader";
-import { format } from "date-fns";
-import Flatpickr from "react-flatpickr";
-import "flatpickr/dist/themes/material_blue.css"; // Flatpickr CSS
-import "@fortawesome/fontawesome-free/css/all.min.css"; // Font Awesome CSS
+import DatePicker from "react-date-picker"; // Import react-date-picker
+import "react-date-picker/dist/DatePicker.css"; // DatePicker CSS
 import "./form.css"; // Import the CSS file
 
 const FormLayout = () => {
@@ -17,7 +15,7 @@ const FormLayout = () => {
     phoneNumber: "",
     address: "",
     timeIn: "",
-    dob: "",
+    dob: new Date(), // Initialize with current date or null
     timeOut: "",
   });
   const [errors, setErrors] = useState({});
@@ -45,7 +43,7 @@ const FormLayout = () => {
     setLoading(true);
     const formattedValues = {
       ...formData,
-      dob: format(new Date(formData.dob), "yyyy-MM-dd"),
+      dob: formData.dob ? format(formData.dob, "yyyy-MM-dd") : "", // Format date
     };
 
     try {
@@ -61,7 +59,7 @@ const FormLayout = () => {
           phoneNumber: "",
           address: "",
           timeIn: "",
-          dob: "",
+          dob: new Date(),
           timeOut: "",
         });
         setErrors({});
@@ -103,20 +101,17 @@ const FormLayout = () => {
             <div className="mb-4">
               <label className="label">Date of Birth (DOB)</label>
               <div className="date-picker-container">
-                <Flatpickr
+                <DatePicker
                   className="date-picker-input input-height"
                   id="dob"
                   name="dob"
-                  placeholder="mm/dd/yyyy"
-                  value={formData.dob ? [new Date(formData.dob)] : []}
-                  onChange={(date) =>
-                    setFormData({ ...formData, dob: date[0] })
-                  }
-                  options={{ dateFormat: "m/d/Y" }} 
+                  value={formData.dob}
+                  onChange={(date) => setFormData({ ...formData, dob: date })}
+                  format="MM/dd/yyyy" // Set the date format
+                  placeholderText="mm/dd/yyyy"
                 />
                 <i className="calendar-icon fas fa-calendar-alt"></i>
               </div>
-
               {errors.dob && <p className="error-text">{errors.dob}</p>}
             </div>
 
