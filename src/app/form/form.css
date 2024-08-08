@@ -2,6 +2,8 @@
 .container {
     max-width: 640px;
     margin: 2rem auto;
+    padding: 0 1rem;
+    /* Ensure padding for mobile */
 }
 
 .header {
@@ -36,10 +38,16 @@
     color: #000000;
     outline: none;
     transition: border-color 0.3s;
+    box-sizing: border-box;
 }
 
 .input:focus {
     border-color: #1d4ed8;
+}
+
+.input-height {
+    height: 2.5rem;
+    /* Adjust height */
 }
 
 .error-text {
@@ -82,4 +90,60 @@
 
 .half-width {
     width: 50%;
+}
+
+/* styles.css */
+.date-picker-container {
+  position: relative;
+}
+
+.date-picker-input {
+  width: 100%;
+  padding: 0.75rem 2rem 0.75rem 1.25rem;
+  border-radius: 0.375rem;
+  border: 1.5px solid #e1e1e1;
+  background-color: transparent;
+  color: #000000;
+  outline: none;
+  transition: border-color 0.3s;
+  box-sizing: border-box;
+}
+
+.date-picker-input:focus {
+  border-color: #1d4ed8;
+}
+
+.calendar-icon {
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #a1a1a1;
+  pointer-events: none;
+}
+
+/* Responsive Styles */
+@media (max-width: 640px) {
+  .date-picker-input {
+    font-size: 0.875rem;
+  }
+}
+
+
+/* Responsive Styles */
+@media (max-width: 640px) {
+    .container {
+        padding: 0 0.5rem;
+    }
+
+    .input,
+    .submit-button {
+        font-size: 0.875rem;
+        /* Adjust font size for mobile */
+    }
+
+    .input-height {
+        height: 2rem;
+        /* Smaller height on mobile */
+    }
 }

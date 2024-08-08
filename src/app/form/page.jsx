@@ -5,7 +5,10 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ClipLoader from "react-spinners/ClipLoader";
 import { format } from "date-fns";
-import './form.css'; 
+import Flatpickr from "react-flatpickr";
+import "flatpickr/dist/themes/material_blue.css"; // Flatpickr CSS
+import "@fortawesome/fontawesome-free/css/all.min.css"; // Font Awesome CSS
+import "./form.css"; // Import the CSS file
 
 const FormLayout = () => {
   const [formData, setFormData] = useState({
@@ -90,7 +93,7 @@ const FormLayout = () => {
                 onChange={(e) =>
                   setFormData({ ...formData, childName: e.target.value })
                 }
-                className="input"
+                className="input input-height"
               />
               {errors.childName && (
                 <p className="error-text">{errors.childName}</p>
@@ -99,21 +102,18 @@ const FormLayout = () => {
 
             <div className="mb-4">
               <label className="label">Date of Birth (DOB)</label>
-              <div className="relative">
-                <input
-                  type="date"
-                  className="input"
+              <div className="date-picker-container">
+                <Flatpickr
+                  className="date-picker-input input-height"
                   id="dob"
                   name="dob"
                   placeholder="mm/dd/yyyy"
                   value={formData.dob}
-                  onChange={(e) =>
-                    setFormData({ ...formData, dob: e.target.value })
+                  onChange={(date) =>
+                    setFormData({ ...formData, dob: date[0] })
                   }
                 />
-                <div className="pointer-events-none absolute inset-0 left-auto right-5 flex items-center">
-                  {/* Date picker icon */}
-                </div>
+                <i className="calendar-icon fas fa-calendar-alt"></i>
               </div>
               {errors.dob && <p className="error-text">{errors.dob}</p>}
             </div>
@@ -129,7 +129,7 @@ const FormLayout = () => {
                 onChange={(e) =>
                   setFormData({ ...formData, guardianName: e.target.value })
                 }
-                className="input"
+                className="input input-height"
               />
               {errors.guardianName && (
                 <p className="error-text">{errors.guardianName}</p>
@@ -147,7 +147,7 @@ const FormLayout = () => {
                 onChange={(e) =>
                   setFormData({ ...formData, phoneNumber: e.target.value })
                 }
-                className="input"
+                className="input input-height"
               />
               {errors.phoneNumber && (
                 <p className="error-text">{errors.phoneNumber}</p>
@@ -165,7 +165,7 @@ const FormLayout = () => {
                 onChange={(e) =>
                   setFormData({ ...formData, address: e.target.value })
                 }
-                className="input"
+                className="input input-height"
               />
               {errors.address && <p className="error-text">{errors.address}</p>}
             </div>
@@ -181,7 +181,7 @@ const FormLayout = () => {
                   onChange={(e) =>
                     setFormData({ ...formData, timeIn: e.target.value })
                   }
-                  className="input"
+                  className="input input-height"
                 />
                 {errors.timeIn && <p className="error-text">{errors.timeIn}</p>}
               </div>
@@ -195,7 +195,7 @@ const FormLayout = () => {
                   onChange={(e) =>
                     setFormData({ ...formData, timeOut: e.target.value })
                   }
-                  className="input"
+                  className="input input-height"
                 />
                 {errors.timeOut && (
                   <p className="error-text">{errors.timeOut}</p>
@@ -220,4 +220,3 @@ const FormLayout = () => {
 };
 
 export default FormLayout;
-
