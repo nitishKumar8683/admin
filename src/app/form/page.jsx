@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -7,6 +7,9 @@ import ClipLoader from "react-spinners/ClipLoader";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { format } from "date-fns";
+import { CalendarIcon } from "@heroicons/react/24/outline";
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
 
 const FormLayout = () => {
   const [formData, setFormData] = useState({
@@ -21,6 +24,8 @@ const FormLayout = () => {
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [dob, setDob] = useState(null); // For react-datepicker
+  const datePickerRef = useRef(null);
+  const [date, setDate] = useState(new Date());
 
   const validateForm = () => {
     const newErrors = {};
@@ -44,7 +49,7 @@ const FormLayout = () => {
     setLoading(true);
     const formattedValues = {
       ...formData,
-      dob: dob ? format(dob, "yyyy-MM-dd") : "", // Format for date
+      dob: dob ? format(dob, "yyyy-MM-dd") : "", 
     };
 
     try {
@@ -63,7 +68,7 @@ const FormLayout = () => {
           dob: "",
           timeOut: "",
         });
-        setDob(null); // Clear the date picker
+        setDob(null); 
       } else {
         toast.error(response.data.message);
       }
@@ -109,8 +114,9 @@ const FormLayout = () => {
               <label className="mb-3 block text-sm font-medium text-black dark:text-white">
                 Date of Birth (DOB)
               </label>
-              <div className="react-datepicker-wrapper w-full">
+              <div className="relative w-full">
                 <DatePicker
+                  ref={datePickerRef}
                   selected={dob}
                   onChange={(date) => {
                     setDob(date);
@@ -118,8 +124,20 @@ const FormLayout = () => {
                   }}
                   dateFormat="yyyy-MM-dd"
                   placeholderText="Select date"
-                  className="react-datepicker__input w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                  customInput={
+                    <input
+                      type="text"
+                      className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 pr-10 text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                      readOnly
+                    />
+                  }
                 />
+                <div
+                  className="absolute right-3 top-1/2 -translate-y-1/2 transform cursor-pointer"
+                  onClick={() => datePickerRef.current?.setOpen(true)} 
+                >
+                  <CalendarIcon className="text-gray-400 dark:text-gray-500 h-5 w-5" />
+                </div>
               </div>
             </div>
 

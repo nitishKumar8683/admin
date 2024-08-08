@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@heroicons/react": "^2.1.5",
     "@reduxjs/toolkit": "^2.2.6",
     "animate.css": "^4.1.1",
     "apexcharts": "^3.45.2",
@@ -30,6 +31,7 @@
     "otp-generator": "^4.0.1",
     "react": "^18",
     "react-apexcharts": "^1.4.1",
+    "react-calendar": "^5.0.0",
     "react-datepicker": "^7.3.0",
     "react-dom": "^18",
     "react-hook-form": "^7.52.1",
