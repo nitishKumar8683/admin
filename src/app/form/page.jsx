@@ -127,7 +127,7 @@ const FormLayout = () => {
                   <ErrorMessage
                     name="dob"
                     component="p"
-                    className="text-red-500 mt-1 text-xs italic"
+                    className="mt-1 text-xs italic text-red"
                   />
                 </div>
 
@@ -144,8 +144,9 @@ const FormLayout = () => {
                       id="timeIn"
                       name="timeIn"
                       title="Enter time in HH:MM format"
-                      className="border-gray-300 w-full rounded-md border px-3 py-3 text-lg shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50"
+                      className="border-gray-300 w-1/2 rounded-md border px-3 py-3 text-lg shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50"
                     />
+
                     <ErrorMessage
                       name="timeIn"
                       component="p"
