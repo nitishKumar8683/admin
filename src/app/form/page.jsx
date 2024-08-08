@@ -139,14 +139,15 @@ const FormLayout = () => {
                     >
                       Time In
                     </label>
-                    <Field
-                      type="time"
-                      id="timeIn"
-                      name="timeIn"
-                      title="Enter time in HH:MM format"
-                      className="border-gray-300 w-1/2 rounded-md border px-3 py-3 text-lg shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50"
-                    />
-
+                    <div className="p-4">
+                      <Field
+                        type="time"
+                        id="timeIn"
+                        name="timeIn"
+                        title="Enter time in HH:MM format"
+                        className="border-gray-300 w-full rounded-md border px-3 py-3 text-lg shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50 sm:w-1/2 md:w-1/3"
+                      />
+                    </div>
                     <ErrorMessage
                       name="timeIn"
                       component="p"
