@@ -233,7 +233,7 @@ const FormLayout = () => {
               </div>
             </div>
 
-            <div className="flex justify-center">
+            <div className="flex justify-end">
               <button
                 type="submit"
                 className="hover:bg-primary-dark rounded bg-primary px-6 py-3 text-white transition"
