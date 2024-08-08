@@ -1,9 +1,11 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ClipLoader from "react-spinners/ClipLoader";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import { format } from "date-fns";
 
 const FormLayout = () => {
@@ -18,13 +20,14 @@ const FormLayout = () => {
   });
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
+  const [dob, setDob] = useState(null); // For react-datepicker
 
   const validateForm = () => {
     const newErrors = {};
     if (!formData.childName) newErrors.childName = "Child's name is required";
     if (!formData.guardianName)
       newErrors.guardianName = "Guardian's name is required";
-    if (!formData.dob) newErrors.dob = "Date of birth is required";
+    if (!dob) newErrors.dob = "Date of birth is required";
     if (!formData.phoneNumber)
       newErrors.phoneNumber = "Phone number is required";
     if (!formData.address) newErrors.address = "Address is required";
@@ -41,7 +44,7 @@ const FormLayout = () => {
     setLoading(true);
     const formattedValues = {
       ...formData,
-      dob: format(new Date(formData.dob), "yyyy-MM-dd"), // Format for date
+      dob: dob ? format(dob, "yyyy-MM-dd") : "", // Format for date
     };
 
     try {
@@ -60,6 +63,7 @@ const FormLayout = () => {
           dob: "",
           timeOut: "",
         });
+        setDob(null); // Clear the date picker
       } else {
         toast.error(response.data.message);
       }
@@ -101,21 +105,22 @@ const FormLayout = () => {
               />
             </div>
 
-            <div className="mb-4">
+            <div className="mb-4 w-full">
               <label className="mb-3 block text-sm font-medium text-black dark:text-white">
                 Date of Birth (DOB)
               </label>
-              <input
-                type="date"
-                id="dob"
-                name="dob"
-                placeholder="mm/dd/yyyy"
-                value={formData.dob}
-                onChange={(e) =>
-                  setFormData({ ...formData, dob: e.target.value })
-                }
-                className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-              />
+              <div className="react-datepicker-wrapper w-full">
+                <DatePicker
+                  selected={dob}
+                  onChange={(date) => {
+                    setDob(date);
+                    setFormData({ ...formData, dob: date });
+                  }}
+                  dateFormat="yyyy-MM-dd"
+                  placeholderText="Select date"
+                  className="react-datepicker__input w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                />
+              </div>
             </div>
 
             <div className="mb-4 flex gap-4">
@@ -127,11 +132,12 @@ const FormLayout = () => {
                   type="time"
                   id="timeIn"
                   name="timeIn"
+                  placeholder="HH:MM"
                   value={formData.timeIn}
                   onChange={(e) =>
                     setFormData({ ...formData, timeIn: e.target.value })
                   }
-                  className="w-full rounded border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                  className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                 />
               </div>
               <div className="w-1/2">
@@ -142,11 +148,12 @@ const FormLayout = () => {
                   type="time"
                   id="timeOut"
                   name="timeOut"
+                  placeholder="HH:MM"
                   value={formData.timeOut}
                   onChange={(e) =>
                     setFormData({ ...formData, timeOut: e.target.value })
                   }
-                  className="w-full rounded border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                  className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                 />
               </div>
             </div>
