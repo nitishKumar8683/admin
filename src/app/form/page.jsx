@@ -5,11 +5,10 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ClipLoader from "react-spinners/ClipLoader";
 import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css"; // Import DatePicker CSS
-import "@fortawesome/fontawesome-free/css/all.min.css"; // Import Font Awesome CSS
-import "./form.css"; 
+import "react-datepicker/dist/react-datepicker.css"; 
+import "@fortawesome/fontawesome-free/css/all.min.css"; 
+import "./form.css";
 import { format } from "date-fns";
-
 
 const FormLayout = () => {
   const [formData, setFormData] = useState({
