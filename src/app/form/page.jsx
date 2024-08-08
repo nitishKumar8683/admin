@@ -108,13 +108,15 @@ const FormLayout = () => {
                   id="dob"
                   name="dob"
                   placeholder="mm/dd/yyyy"
-                  value={formData.dob}
+                  value={formData.dob ? [new Date(formData.dob)] : []}
                   onChange={(date) =>
                     setFormData({ ...formData, dob: date[0] })
                   }
+                  options={{ dateFormat: "m/d/Y" }} 
                 />
                 <i className="calendar-icon fas fa-calendar-alt"></i>
               </div>
+
               {errors.dob && <p className="error-text">{errors.dob}</p>}
             </div>
 
