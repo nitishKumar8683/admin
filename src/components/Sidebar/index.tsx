@@ -64,40 +64,40 @@ const menuGroups: MenuGroup[] = [
         managerOnly: true,
         employeeOnly: true,
       },
-      {
-        icon: (
-          <svg
-            className="fill-current"
-            width="18"
-            height="19"
-            viewBox="0 0 18 19"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          ></svg>
-        ),
-        label: "Review Form Data",
-        route: "/reviews",
-        adminOnly: true,
-        managerOnly: true,
-        employeeOnly: true,
-      },
-      {
-        icon: (
-          <svg
-            className="fill-current"
-            width="18"
-            height="19"
-            viewBox="0 0 18 19"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          ></svg>
-        ),
-        label: "FeedBack Form Data",
-        route: "/feedback",
-        adminOnly: true,
-        managerOnly: true,
-        employeeOnly: true,
-      },
+      // {
+      //   icon: (
+      //     <svg
+      //       className="fill-current"
+      //       width="18"
+      //       height="19"
+      //       viewBox="0 0 18 19"
+      //       fill="none"
+      //       xmlns="http://www.w3.org/2000/svg"
+      //     ></svg>
+      //   ),
+      //   label: "Review Form Data",
+      //   route: "/reviews",
+      //   adminOnly: true,
+      //   managerOnly: true,
+      //   employeeOnly: true,
+      // },
+      // {
+      //   icon: (
+      //     <svg
+      //       className="fill-current"
+      //       width="18"
+      //       height="19"
+      //       viewBox="0 0 18 19"
+      //       fill="none"
+      //       xmlns="http://www.w3.org/2000/svg"
+      //     ></svg>
+      //   ),
+      //   label: "FeedBack Form Data",
+      //   route: "/feedback",
+      //   adminOnly: true,
+      //   managerOnly: true,
+      //   employeeOnly: true,
+      // },
     ],
   },
 ];
