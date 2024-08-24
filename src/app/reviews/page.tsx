@@ -19,12 +19,11 @@ interface User {
   address: string;
   createdAt: any;
   dob: any;
-  name : string;
-  email : string;
-  product : string;
-  rating : number;
-  comment : string
-
+  name: string;
+  email: string;
+  product: string;
+  rating: number;
+  comments: string;
 }
 
 const TableThree = () => {
