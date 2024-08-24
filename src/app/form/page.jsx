@@ -62,7 +62,7 @@ const FormLayout = () => {
     <>
       <ToastContainer />
       <div className="container">
-        <h2 className="header">Consent Form</h2>
+        <h2 className="header">Conscient Form</h2>
         <div className="form-container">
           <Formik
             initialValues={{
