@@ -1,4 +1,4 @@
-"use client";
+'use client'
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { FaEdit, FaEye } from "react-icons/fa";
@@ -16,8 +16,8 @@ interface User {
   timeOut: string;
   phoneNumber: string;
   address: string;
-  createdAt: any;
-  dob: any;
+  createdAt: string; // Use string type for dates
+  dob: string; // Use string type for dates
 }
 
 const TableThree = () => {
@@ -39,7 +39,13 @@ const TableThree = () => {
     setLoading(true);
     try {
       const response = await axios.get("/api/child/childData");
-      setUserData(response.data.childsData);
+      const sortedData = response.data.childsData.sort((a: User, b: User) => {
+        // Ensure 'createdAt' fields are converted to Date objects for comparison
+        return (
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        );
+      });
+      setUserData(sortedData);
     } catch (error) {
       toast.error("Failed to fetch users");
     } finally {
@@ -108,7 +114,7 @@ const TableThree = () => {
     return new Date(dateString).toLocaleDateString("en-US");
   };
 
-  const toDateInputValue = (date: any) => {
+  const toDateInputValue = (date: string) => {
     if (!date) return "";
     const d = new Date(date);
     const year = d.getFullYear();

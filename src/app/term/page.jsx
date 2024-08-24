@@ -37,8 +37,14 @@ const PlayZoneRules = () => {
           </li>
         </ol>
         <p className="text-gray-700 mt-6">
-          Note: Please fill out the details below if the child exceeds 1 hour in
-          the Wiggly Woo play zone.
+          <strong>Note:</strong> Please fill out the details below if the child
+          exceeds 1 hour in the Wiggly Woo play zone.
+        </p>
+
+        <p className="text-gray-700 mt-6">
+          *If the child exceeds 1 hours upto 30 mins then charges will be
+          applicable. If he/she exceeds 1 hour 30 mins then 2 hours charges will
+          be applicable. (No reminder from our side will be issued)
         </p>
       </div>
     </div>
