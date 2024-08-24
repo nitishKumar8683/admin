@@ -82,7 +82,7 @@ const FormLayout = () => {
     <>
       <ToastContainer />
       <div className="container">
-        <h2 className="header">Consent Form</h2>
+        <h2 className="header">Conscient Form</h2>
         <div className="form-container">
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
@@ -205,7 +205,7 @@ const FormLayout = () => {
               </div>
             </div>
 
-            <div className="mb-4 flex items-center space-x-3 mt-5">
+            <div className="mb-4 mt-5 flex items-center space-x-3">
               <input
                 type="checkbox"
                 id="agreeToTerms"
@@ -219,7 +219,7 @@ const FormLayout = () => {
                   href="/terms"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-semibold text-blue-500 underline ml-1"
+                  className="ml-1 font-semibold text-blue-500 underline"
                 >
                   Terms and Conditions
                 </a>
