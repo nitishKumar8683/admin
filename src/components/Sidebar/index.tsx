@@ -30,23 +30,23 @@ const menuGroups: MenuGroup[] = [
   {
     name: "MENU",
     menuItems: [
-      {
-        icon: (
-          <svg
-            className="fill-current"
-            width="18"
-            height="18"
-            viewBox="0 0 18 18"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          ></svg>
-        ),
-        label: "Profile",
-        route: "/profile",
-        adminOnly: true,
-        managerOnly: true,
-        employeeOnly: true,
-      },
+      // {
+      //   icon: (
+      //     <svg
+      //       className="fill-current"
+      //       width="18"
+      //       height="18"
+      //       viewBox="0 0 18 18"
+      //       fill="none"
+      //       xmlns="http://www.w3.org/2000/svg"
+      //     ></svg>
+      //   ),
+      //   label: "Profile",
+      //   route: "/profile",
+      //   adminOnly: true,
+      //   managerOnly: true,
+      //   employeeOnly: true,
+      // },
       {
         icon: (
           <svg
@@ -64,40 +64,57 @@ const menuGroups: MenuGroup[] = [
         managerOnly: true,
         employeeOnly: true,
       },
-      // {
-      //   icon: (
-      //     <svg
-      //       className="fill-current"
-      //       width="18"
-      //       height="19"
-      //       viewBox="0 0 18 19"
-      //       fill="none"
-      //       xmlns="http://www.w3.org/2000/svg"
-      //     ></svg>
-      //   ),
-      //   label: "Review Form Data",
-      //   route: "/reviews",
-      //   adminOnly: true,
-      //   managerOnly: true,
-      //   employeeOnly: true,
-      // },
-      // {
-      //   icon: (
-      //     <svg
-      //       className="fill-current"
-      //       width="18"
-      //       height="19"
-      //       viewBox="0 0 18 19"
-      //       fill="none"
-      //       xmlns="http://www.w3.org/2000/svg"
-      //     ></svg>
-      //   ),
-      //   label: "FeedBack Form Data",
-      //   route: "/feedback",
-      //   adminOnly: true,
-      //   managerOnly: true,
-      //   employeeOnly: true,
-      // },
+      {
+        icon: (
+          <svg
+            className="fill-current"
+            width="18"
+            height="19"
+            viewBox="0 0 18 19"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          ></svg>
+        ),
+        label: "Review Form Data",
+        route: "/reviews",
+        adminOnly: true,
+        managerOnly: true,
+        employeeOnly: true,
+      },
+      {
+        icon: (
+          <svg
+            className="fill-current"
+            width="18"
+            height="19"
+            viewBox="0 0 18 19"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          ></svg>
+        ),
+        label: "Feedback Form Data",
+        route: "/feedback",
+        adminOnly: true,
+        managerOnly: true,
+        employeeOnly: true,
+      },
+      {
+        icon: (
+          <svg
+            className="fill-current"
+            width="18"
+            height="19"
+            viewBox="0 0 18 19"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          ></svg>
+        ),
+        label: "Monthly Form Data",
+        route: "/feedback",
+        adminOnly: true,
+        managerOnly: true,
+        employeeOnly: true,
+      },
     ],
   },
 ];

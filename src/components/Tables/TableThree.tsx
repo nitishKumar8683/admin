@@ -230,6 +230,12 @@ const TableThree = () => {
                       Child Name
                     </th>
                     <th className="px-4 py-2 font-medium text-black dark:text-white">
+                      Guardian&apos;s Name:
+                    </th>
+                    <th className="px-4 py-2 font-medium text-black dark:text-white">
+                      Phone Number
+                    </th>
+                    <th className="px-4 py-2 font-medium text-black dark:text-white">
                       Date of Birth (DOB)
                     </th>
                     <th className="px-4 py-2 font-medium text-black dark:text-white">
@@ -245,6 +251,12 @@ const TableThree = () => {
                     >
                       <td className="px-4 py-2 text-black dark:text-white">
                         {user.childName}
+                      </td>
+                      <td className="px-4 py-2 text-black dark:text-white">
+                        {user.guardianName}
+                      </td>
+                      <td className="px-4 py-2 text-black dark:text-white">
+                        {user.phoneNumber}
                       </td>
                       <td className="px-4 py-2 text-black dark:text-white">
                         {formatDate(user.dob)}
