@@ -2,8 +2,8 @@ import React from "react";
 
 const PlayZoneRules = () => {
   return (
-    <div className="bg-gray-100 min-h-screen px-4 py-8 sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-2xl rounded-lg bg-white p-6 shadow-lg">
+    <div className="bg-gray-100 min-h-screen bg-[url('/image-woo.jpeg')] bg-cover bg-center bg-no-repeat px-4 py-8 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-2xl rounded-lg bg-white bg-opacity-90 p-6 shadow-lg">
         <h1 className="text-gray-800 mb-6 text-2xl font-bold">
           The Wiggly Woo Play Zone Rules and Regulations
         </h1>
