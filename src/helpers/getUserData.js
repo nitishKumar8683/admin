@@ -2,10 +2,19 @@ import jwt from "jsonwebtoken";
 
 export const getDataUser = (request) => {
   try {
-    const enCodedToken = request.cookies.get("token")?.value || "";
-    const deCodedToken = jwt.verify(enCodedToken, process.env.TOKEN_SECRET);
-    return deCodedToken.id;
+    const encodedToken = request.cookies.get("token")?.value || "";
+    if (!encodedToken) {
+      throw new Error("Token not found in cookies");
+    }
+    const decodedToken = jwt.verify(encodedToken, process.env.TOKEN_SECRET);
+    return decodedToken.id;
   } catch (error) {
-    throw new Error(error.message);
+    if (error.name === "JsonWebTokenError") {
+      throw new Error("Invalid token");
+    } else if (error.name === "TokenExpiredError") {
+      throw new Error("Token expired");
+    } else {
+      throw new Error(`Authentication error: ${error.message}`);
+    }
   }
 };
