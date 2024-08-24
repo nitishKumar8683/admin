@@ -29,7 +29,7 @@ interface MenuGroup {
 const menuGroups: MenuGroup[] = [
   {
     name: "MENU",
-    menuItems: [      
+    menuItems: [
       {
         icon: (
           <svg
@@ -58,8 +58,42 @@ const menuGroups: MenuGroup[] = [
             xmlns="http://www.w3.org/2000/svg"
           ></svg>
         ),
-        label: "Consent Data",
+        label: "Consent Form Data",
         route: "/tables",
+        adminOnly: true,
+        managerOnly: true,
+        employeeOnly: true,
+      },
+      {
+        icon: (
+          <svg
+            className="fill-current"
+            width="18"
+            height="19"
+            viewBox="0 0 18 19"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          ></svg>
+        ),
+        label: "Review Form Data",
+        route: "/reviews",
+        adminOnly: true,
+        managerOnly: true,
+        employeeOnly: true,
+      },
+      {
+        icon: (
+          <svg
+            className="fill-current"
+            width="18"
+            height="19"
+            viewBox="0 0 18 19"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          ></svg>
+        ),
+        label: "FeedBack Form Data",
+        route: "/feedback",
         adminOnly: true,
         managerOnly: true,
         employeeOnly: true,

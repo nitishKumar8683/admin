@@ -22,6 +22,7 @@ const FormLayout = () => {
   });
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
+  const [agreeToTerms, setAgreeToTerms] = useState(false);
 
   const validateForm = () => {
     const newErrors = {};
@@ -34,6 +35,7 @@ const FormLayout = () => {
     if (!formData.address) newErrors.address = "Address is required";
     if (!formData.timeIn) newErrors.timeIn = "Time in is required";
     if (!formData.timeOut) newErrors.timeOut = "Time out is required";
+    if (!agreeToTerms) newErrors.agreeToTerms = "You must agree to the terms and conditions"; 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -65,6 +67,7 @@ const FormLayout = () => {
           timeOut: "",
         });
         setErrors({});
+        setAgreeToTerms(false);
       } else {
         toast.error(response.data.message);
       }
@@ -200,6 +203,32 @@ const FormLayout = () => {
                   <p className="error-text">{errors.timeOut}</p>
                 )}
               </div>
+            </div>
+
+            <div className="mb-4 flex items-center space-x-3 mt-5">
+              <input
+                type="checkbox"
+                id="agreeToTerms"
+                checked={agreeToTerms}
+                onChange={(e) => setAgreeToTerms(e.target.checked)}
+                className="form-checkbox border-gray-300 h-4 w-4 rounded text-blue-600"
+              />
+              <label htmlFor="agreeToTerms" className="text-sm">
+                I confirm that I have read and agree to the
+                <a
+                  href="/terms"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-semibold text-blue-500 underline ml-1"
+                >
+                  Terms and Conditions
+                </a>
+              </label>
+              {errors.agreeToTerms && (
+                <p className="text-red-500 mt-1 text-xs">
+                  {errors.agreeToTerms}
+                </p>
+              )}
             </div>
 
             <div className="button-container">

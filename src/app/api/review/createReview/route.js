@@ -1,4 +1,4 @@
-import Child from "@/models/childModel";
+import Review from "@/models/reviewModel";
 import { connect } from "@/db/dbConfig";
 import { NextResponse } from "next/server";
 
@@ -8,33 +8,26 @@ export async function POST(req) {
     try {
         const reqBody = await req.json()
 
-        const { childName, guardianName, phoneNumber, address, timeIn, dob, timeOut } = reqBody
+        const { name, email, product, rating, comments, recommend } = reqBody
 
-        const extingUser = await Child.findOne({ phoneNumber })
+        const extingUser = await Review.findOne({ email })
         if (extingUser) {
             return NextResponse.json({
-                message: "Phone Number already exists",
+                message: "Email already exists",
                 status: 400,
                 success: false,
             });
         }
 
-        const newChild = new Child({
-            childName,
-            guardianName,
-            phoneNumber,
-            address,
-            timeIn,
-            dob,
-            timeOut,
-            isDelete: ""
+        const newReview = new Review({
+            name, email, product, rating, comments, recommend, isDelete: ""
         })
 
-        const savedChild = await newChild.save()
-        console.log(savedChild)
+        const savedReview = await newReview.save()
+        console.log(savedReview)
         return NextResponse.json({
-            message: "Consent form save successfully",
-            savedChild,
+            message: "Review form save successfully",
+            savedReview,
             success: true,
         });
     } catch (error) {
