@@ -1,5 +1,9 @@
-'use client'
+"use client";
 import { useState } from "react";
+import Image from "next/image";
+import logo from "./logo.png";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const FeedbackForm = () => {
   const [formData, setFormData] = useState({
@@ -8,8 +12,6 @@ const FeedbackForm = () => {
     childName: "",
     feedback: "",
     satisfaction: "",
-    improvements: "",
-    suggestions: "",
   });
 
   const handleChange = (
@@ -24,17 +26,57 @@ const FeedbackForm = () => {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Handle form submission (e.g., send data to an API or server)
-    console.log(formData);
+
+    try {
+      const response = await fetch("/api/feedback/createFeedback/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        toast.success("Feedback submitted successfully!"); // Show success toast
+        // Optionally clear the form
+        setFormData({
+          name: "",
+          email: "",
+          childName: "",
+          feedback: "",
+          satisfaction: "",
+        });
+      } else {
+        toast.error("Failed to submit feedback"); // Show error toast
+      }
+    } catch (error) {
+      toast.error("An error occurred: "); // Show error toast
+    }
   };
 
   return (
     <div className="mx-auto mt-10 max-w-lg rounded-lg bg-white p-8 shadow-md">
-      <h1 className="mb-6 text-center text-2xl font-bold">
-        Guardian Feedback Form
-      </h1>
+      <div className="mb-6 flex flex-col items-start">
+        <div className="mb-2 flex items-center">
+          <Image
+            src={logo}
+            alt="The Wigglyy Woo Logo"
+            width={150}
+            height={120}
+            className="mr-4"
+          />
+          <span>
+            <h1 className="whitespace-nowrap text-2xl font-bold text-[#f15982]">
+              Guardian Feedback Form
+            </h1>
+            <h6 className="text-2sm whitespace-nowrap font-bold text-[#8c52ff]">
+              Mobile no. 7840044466
+            </h6>
+          </span>
+        </div>
+      </div>
       <form onSubmit={handleSubmit}>
         {/* Guardian Name */}
         <div className="flex space-x-4">
@@ -76,7 +118,7 @@ const FeedbackForm = () => {
         </div>
 
         {/* Child's Name */}
-        <div className="flex space-x-4 my-4">
+        <div className="my-4 flex space-x-4">
           <div className="w-1/2">
             <label
               htmlFor="childName"
@@ -110,6 +152,7 @@ const FeedbackForm = () => {
               className="border-gray-300 mt-1 block w-full rounded-md border px-4 py-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
               required
             >
+              <option value="">Select Level</option>
               <option value="1">1 - Very Unsatisfied</option>
               <option value="2">2 - Unsatisfied</option>
               <option value="3">3 - Neutral</option>
@@ -148,6 +191,7 @@ const FeedbackForm = () => {
           </button>
         </div>
       </form>
+      <ToastContainer /> {/* Display toast messages */}
     </div>
   );
 };
