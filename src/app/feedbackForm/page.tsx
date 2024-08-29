@@ -39,8 +39,7 @@ const FeedbackForm = () => {
       });
 
       if (response.ok) {
-        toast.success("Feedback submitted successfully!"); // Show success toast
-        // Optionally clear the form
+        toast.success("Feedback submitted successfully!");
         setFormData({
           name: "",
           email: "",
@@ -49,10 +48,10 @@ const FeedbackForm = () => {
           satisfaction: "",
         });
       } else {
-        toast.error("Failed to submit feedback"); // Show error toast
+        toast.error("Failed to submit feedback");
       }
     } catch (error) {
-      toast.error("An error occurred: "); // Show error toast
+      toast.error("An error occurred");
     }
   };
 
@@ -67,20 +66,19 @@ const FeedbackForm = () => {
             height={120}
             className="mr-4"
           />
-          <span>
-            <h1 className="whitespace-nowrap text-2xl font-bold text-[#f15982]">
+          <div className="flex flex-col">
+            <h1 className="text-2xl font-bold text-[#f15982]">
               Guardian Feedback Form
             </h1>
-            <h6 className="text-2sm whitespace-nowrap font-bold text-[#8c52ff]">
+            <h6 className="text-sm font-bold text-[#8c52ff]">
               Mobile no. 7840044466
             </h6>
-          </span>
+          </div>
         </div>
       </div>
       <form onSubmit={handleSubmit}>
-        {/* Guardian Name */}
-        <div className="flex space-x-4">
-          <div className="w-1/2">
+        <div className="flex flex-col space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
+          <div className="w-full sm:w-1/2">
             <label
               htmlFor="name"
               className="text-gray-700 block text-sm font-medium"
@@ -98,7 +96,7 @@ const FeedbackForm = () => {
             />
           </div>
 
-          <div className="w-1/2">
+          <div className="w-full sm:w-1/2">
             <label
               htmlFor="email"
               className="text-gray-700 block text-sm font-medium"
@@ -117,12 +115,11 @@ const FeedbackForm = () => {
           </div>
         </div>
 
-        {/* Child's Name */}
-        <div className="my-4 flex space-x-4">
-          <div className="w-1/2">
+        <div className="my-4 flex flex-col space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
+          <div className="w-full sm:w-1/2">
             <label
               htmlFor="childName"
-              className="text-gray-700 block text-sm font-medium "
+              className="text-gray-700 block text-sm font-medium"
             >
               Your Childs Name
             </label>
@@ -137,7 +134,7 @@ const FeedbackForm = () => {
             />
           </div>
 
-          <div className="w-1/2">
+          <div className="w-full sm:w-1/2">
             <label
               htmlFor="satisfaction"
               className="text-gray-700 block text-sm font-medium"
@@ -162,7 +159,6 @@ const FeedbackForm = () => {
           </div>
         </div>
 
-        {/* Feedback */}
         <div className="mb-4">
           <label
             htmlFor="feedback"
@@ -181,7 +177,6 @@ const FeedbackForm = () => {
           ></textarea>
         </div>
 
-        {/* Submit Button */}
         <div className="flex justify-center">
           <button
             type="submit"
@@ -191,7 +186,7 @@ const FeedbackForm = () => {
           </button>
         </div>
       </form>
-      <ToastContainer /> {/* Display toast messages */}
+      <ToastContainer />
     </div>
   );
 };
