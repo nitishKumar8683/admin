@@ -14,6 +14,16 @@ const FeedbackForm = () => {
     satisfaction: "",
   });
 
+  const [errors, setErrors] = useState({
+    name: "",
+    email: "",
+    childName: "",
+    feedback: "",
+    satisfaction: "",
+  });
+
+  const [errorMessage, setErrorMessage] = useState("");
+
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
@@ -26,8 +36,72 @@ const FeedbackForm = () => {
     });
   };
 
+  const validateForm = () => {
+    const newErrors = {
+      name: "",
+      email: "",
+      childName: "",
+      feedback: "",
+      satisfaction: "",
+    };
+    let isValid = true;
+
+    // Name validation
+    if (!formData.name.trim()) {
+      newErrors.name = "Name is required";
+      isValid = false;
+    } else if (formData.name.trim().length < 3) {
+      newErrors.name = "Name must be at least 3 characters long";
+      isValid = false;
+    } else if (/^[\d\W]/.test(formData.name.trim())) {
+      newErrors.name = "Name cannot start with a number or special character";
+      isValid = false;
+    }
+
+    // Email validation
+    if (!formData.email.trim()) {
+      newErrors.email = "Email is required";
+      isValid = false;
+    } else if (!/^\S+@\S+\.\S+$/.test(formData.email)) {
+      newErrors.email = "Email is invalid";
+      isValid = false;
+    }
+
+    // Child name validation
+    if (!formData.childName.trim()) {
+      newErrors.childName = "Child's name is required";
+      isValid = false;
+    } else if (formData.childName.trim().length < 3) {
+      newErrors.childName = "Child's name must be at least 3 characters long";
+      isValid = false;
+    } else if (/^[\d\W]/.test(formData.childName.trim())) {
+      newErrors.childName = "Child's name cannot start with a number or special character";
+      isValid = false;
+    }
+
+    // Feedback validation
+    if (!formData.feedback.trim()) {
+      newErrors.feedback = "Feedback is required";
+      isValid = false;
+    }
+
+    // Satisfaction validation
+    if (!formData.satisfaction.trim()) {
+      newErrors.satisfaction = "Satisfaction rating is required";
+      isValid = false;
+    }
+
+    setErrors(newErrors);
+    return isValid;
+  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (!validateForm()) {
+      setErrorMessage("Please fix the errors above.");
+      return;
+    }
 
     try {
       const response = await fetch("/api/feedback/createFeedback/", {
@@ -47,11 +121,19 @@ const FeedbackForm = () => {
           feedback: "",
           satisfaction: "",
         });
+        setErrors({
+          name: "",
+          email: "",
+          childName: "",
+          feedback: "",
+          satisfaction: "",
+        });
+        setErrorMessage(""); // Clear error message on success
       } else {
-        toast.error("Failed to submit feedback");
+        setErrorMessage("Failed to submit feedback.");
       }
     } catch (error) {
-      toast.error("An error occurred");
+      setErrorMessage("An error occurred.");
     }
   };
 
@@ -94,6 +176,9 @@ const FeedbackForm = () => {
               className="border-gray-300 mt-1 block w-full rounded-md border px-4 py-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
               required
             />
+            {errors.name && (
+              <p className="text-[#FF0000] mt-1 text-sm">{errors.name}</p>
+            )}
           </div>
 
           <div className="w-full sm:w-1/2">
@@ -112,6 +197,9 @@ const FeedbackForm = () => {
               className="border-gray-300 mt-1 block w-full rounded-md border px-4 py-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
               required
             />
+            {errors.email && (
+              <p className="text-[#FF0000] mt-1 text-sm">{errors.email}</p>
+            )}
           </div>
         </div>
 
@@ -132,6 +220,9 @@ const FeedbackForm = () => {
               className="border-gray-300 mt-1 block w-full rounded-md border px-4 py-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
               required
             />
+            {errors.childName && (
+              <p className="text-[#FF0000] mt-1 text-sm">{errors.childName}</p>
+            )}
           </div>
 
           <div className="w-full sm:w-1/2">
@@ -156,6 +247,9 @@ const FeedbackForm = () => {
               <option value="4">4 - Satisfied</option>
               <option value="5">5 - Very Satisfied</option>
             </select>
+            {errors.satisfaction && (
+              <p className="text-[#FF0000] mt-1 text-sm">{errors.satisfaction}</p>
+            )}
           </div>
         </div>
 
@@ -175,14 +269,21 @@ const FeedbackForm = () => {
             onChange={handleChange}
             required
           ></textarea>
+          {errors.feedback && (
+            <p className="text-[#FF0000] mt-1 text-sm">{errors.feedback}</p>
+          )}
         </div>
+
+        {errorMessage && (
+          <p className="text-[#FF0000] mb-4 text-sm">{errorMessage}</p>
+        )}
 
         <div className="flex justify-center">
           <button
             type="submit"
-            className="rounded-md bg-indigo-600 px-6 py-2 font-semibold text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+            className="bg-[#f15982] text-white py-2 px-4 rounded-md hover:bg-[#c0476c] focus:outline-none focus:ring-2 focus:ring-[#f15982] focus:ring-offset-2"
           >
-            Submit Feedback
+            Submit
           </button>
         </div>
       </form>
