@@ -2,6 +2,8 @@
 import React, { useEffect, useState } from "react";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 interface Feedback {
   _id: string;
@@ -52,13 +54,19 @@ const FeedbackTable: React.FC = () => {
       .then((data) => {
         if (data.success) {
           console.log("Feedback deleted successfully");
+          toast.success("Feedback deleted successfully!");
           setFeedbacks(feedbacks.filter((feedback) => feedback._id !== id));
         } else {
           console.error("Error deleting feedback:", data.error);
+          toast.error("Error deleting feedback: " + data.error);
         }
       })
-      .catch((error) => console.error("Error:", error));
+      .catch((error) => {
+        console.error("Error:", error);
+        toast.error("Error deleting feedback: " + error.message);
+      });
   };
+
 
   const handleView = (feedback: Feedback) => {
     setSelectedFeedback(feedback);
@@ -148,8 +156,8 @@ const FeedbackTable: React.FC = () => {
                   <td className="text-gray-600 px-2 py-1 text-xs sm:text-sm md:text-base">
                     {feedback.satisfaction}
                   </td>
-                  
-                  <td className="flex space-x-1 px-2 py-1 text-xs sm:text-sm md:text-base">
+
+                  <td className="flex space-x-1 overflow-auto px-2 py-1 text-xs sm:text-sm md:text-base">
                     <i
                       onClick={() => handleView(feedback)}
                       className="bi bi-eye cursor-pointer text-blue-500 hover:text-blue-700"
@@ -162,7 +170,7 @@ const FeedbackTable: React.FC = () => {
                     ></i>
                     <i
                       onClick={() => handleDelete(feedback._id)}
-                      className="bi bi-trash text-red-500 cursor-pointer"
+                      className="bi bi-trash text-[#FF0000] cursor-pointer"
                       style={{ fontSize: "1rem" }}
                     ></i>
                   </td>
@@ -174,7 +182,10 @@ const FeedbackTable: React.FC = () => {
 
         {/* Dialog Box */}
         {isDialogOpen && selectedFeedback && (
-          <div className="bg-gray-800 fixed inset-0 flex items-center justify-center bg-opacity-50">
+          <div
+            className="bg-gray-800 fixed inset-0 z-50 flex items-center justify-center overflow-scroll bg-opacity-50"
+            style={{ zIndex: 1000 }}
+          >
             <div className="relative w-full max-w-lg rounded-lg bg-white p-4 shadow-lg sm:p-6 md:p-8 lg:p-10">
               <i
                 onClick={closeDialog}
@@ -185,84 +196,92 @@ const FeedbackTable: React.FC = () => {
                 {isEditMode ? "Update Feedback Details" : "Feedback Details"}
               </h2>
 
-              <div className="mb-2">
-                <strong>Name:</strong>{" "}
-                {isEditMode ? (
-                  <input
-                    type="text"
-                    name="name"
-                    value={selectedFeedback.name}
-                    onChange={handleInputChange}
-                    className="w-full rounded border p-2 text-xs sm:text-sm md:text-base"
-                  />
-                ) : (
-                  selectedFeedback.name
-                )}
-              </div>
-              <div className="mb-2">
-                <strong>Email:</strong>{" "}
-                {isEditMode ? (
-                  <input
-                    type="email"
-                    name="email"
-                    value={selectedFeedback.email}
-                    onChange={handleInputChange}
-                    className="w-full rounded border p-2 text-xs sm:text-sm md:text-base"
-                  />
-                ) : (
-                  selectedFeedback.email
-                )}
-              </div>
-              <div className="mb-2">
-                <strong>Child Name:</strong>{" "}
-                {isEditMode ? (
-                  <input
-                    type="text"
-                    name="childName"
-                    value={selectedFeedback.childName}
-                    onChange={handleInputChange}
-                    className="w-full rounded border p-2 text-xs sm:text-sm md:text-base"
-                  />
-                ) : (
-                  selectedFeedback.childName
-                )}
-              </div>
-              <div className="mb-2">
-                <strong>Satisfaction:</strong>{" "}
-                {isEditMode ? (
-                  <input
-                    type="text"
-                    name="satisfaction"
-                    value={selectedFeedback.satisfaction}
-                    onChange={handleInputChange}
-                    className="w-full rounded border p-2 text-xs sm:text-sm md:text-base"
-                  />
-                ) : (
-                  selectedFeedback.satisfaction
-                )}
-              </div>
-              <div className="mb-2">
-                <strong>Feedback:</strong>{" "}
-                {isEditMode ? (
-                  <textarea
-                    name="feedback"
-                    value={selectedFeedback.feedback}
-                    onChange={handleInputChange}
-                    className="w-full rounded border p-2 text-xs sm:text-sm md:text-base"
-                  />
-                ) : (
-                  selectedFeedback.feedback
-                )}
-              </div>
+              <div
+                className="modal-body"
+                style={{
+                  maxHeight: "calc(100vh - 200px)",
+                  overflowY: "auto",
+                }}
+              >
+                <div className="mb-2">
+                  <strong>Name:</strong>{" "}
+                  {isEditMode ? (
+                    <input
+                      type="text"
+                      name="name"
+                      value={selectedFeedback.name}
+                      onChange={handleInputChange}
+                      className="w-full rounded border p-2 text-xs sm:text-sm md:text-base"
+                    />
+                  ) : (
+                    selectedFeedback.name
+                  )}
+                </div>
+                <div className="mb-2">
+                  <strong>Email:</strong>{" "}
+                  {isEditMode ? (
+                    <input
+                      type="email"
+                      name="email"
+                      value={selectedFeedback.email}
+                      onChange={handleInputChange}
+                      className="w-full rounded border p-2 text-xs sm:text-sm md:text-base"
+                    />
+                  ) : (
+                    selectedFeedback.email
+                  )}
+                </div>
+                <div className="mb-2">
+                  <strong>Child Name:</strong>{" "}
+                  {isEditMode ? (
+                    <input
+                      type="text"
+                      name="childName"
+                      value={selectedFeedback.childName}
+                      onChange={handleInputChange}
+                      className="w-full rounded border p-2 text-xs sm:text-sm md:text-base"
+                    />
+                  ) : (
+                    selectedFeedback.childName
+                  )}
+                </div>
+                <div className="mb-2">
+                  <strong>Satisfaction:</strong>{" "}
+                  {isEditMode ? (
+                    <input
+                      type="text"
+                      name="satisfaction"
+                      value={selectedFeedback.satisfaction}
+                      onChange={handleInputChange}
+                      className="w-full rounded border p-2 text-xs sm:text-sm md:text-base"
+                    />
+                  ) : (
+                    selectedFeedback.satisfaction
+                  )}
+                </div>
+                <div className="mb-2">
+                  <strong>Feedback:</strong>{" "}
+                  {isEditMode ? (
+                    <textarea
+                      name="feedback"
+                      value={selectedFeedback.feedback}
+                      onChange={handleInputChange}
+                      className="w-full rounded border p-2 text-xs sm:text-sm md:text-base"
+                    />
+                  ) : (
+                    selectedFeedback.feedback
+                  )}
+                </div>
 
-              {isEditMode && (
-                <button
-                  onClick={handleSaveChanges}
-                  className="mt-4 w-full rounded bg-blue-500 px-4 py-2 text-xs text-white hover:bg-blue-700 sm:text-sm md:text-base"
-                >
-                  Save Changes
-                </button>
-              )}
+                {isEditMode && (
+                  <button
+                    onClick={handleSaveChanges}
+                    className="mt-4 w-full rounded bg-blue-500 px-4 py-2 text-xs text-white hover:bg-blue-700 sm:text-sm md:text-base"
+                  >
+                    Save Changes
+                  </button>
+                )}
+              </div>
             </div>
           </div>
         )}
