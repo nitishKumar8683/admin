@@ -93,7 +93,7 @@ const menuGroups: MenuGroup[] = [
           ></svg>
         ),
         label: "Feedback Form Data",
-        route: "/feedbackForm",
+        route: "/feedbackTable",
         adminOnly: true,
         managerOnly: true,
         employeeOnly: true,
