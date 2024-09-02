@@ -34,6 +34,63 @@ const FeedbackForm = () => {
       ...formData,
       [name]: value,
     });
+
+    validateField(name, value);
+  };
+
+  const validateField = (name: string, value: string) => {
+    const newErrors = { ...errors };
+    switch (name) {
+      case "name":
+        if (!value.trim()) {
+          newErrors.name = "Name is required";
+        } else if (/^[\d\W]/.test(value.trim())) {
+          newErrors.name =
+            "Name cannot start with a number or special character";
+        } else if (value.trim().length < 3) {
+          newErrors.name = "Name must be at least 3 characters long";
+        } else {
+          newErrors.name = "";
+        }
+        break;
+      case "email":
+        if (!value.trim()) {
+          newErrors.email = "Email is required";
+        } else if (!/^\S+@\S+\.\S+$/.test(value)) {
+          newErrors.email = "Email is invalid";
+        } else {
+          newErrors.email = "";
+        }
+        break;
+      case "childName":
+        if (!value.trim()) {
+          newErrors.childName = "Child's name is required";
+        } else if (/^[\d\W]/.test(value.trim())) {
+          newErrors.childName =
+            "Child's name cannot start with a number or special character";
+        } else if (value.trim().length < 3) {
+          newErrors.childName =
+            "Child's name must be at least 3 characters long";
+        } else {
+          newErrors.childName = "";
+        }
+        break;
+      case "feedback":
+        if (!value.trim()) {
+          newErrors.feedback = "Feedback is required";
+        } else {
+          newErrors.feedback = "";
+        }
+        break;
+      case "satisfaction":
+        if (!value.trim()) {
+          newErrors.satisfaction = "Satisfaction rating is required";
+        } else {
+          newErrors.satisfaction = "";
+        }
+        break;
+    }
+    setErrors(newErrors);
   };
 
   const validateForm = () => {
@@ -46,49 +103,20 @@ const FeedbackForm = () => {
     };
     let isValid = true;
 
-    // Name validation
-    if (!formData.name.trim()) {
-      newErrors.name = "Name is required";
-      isValid = false;
-    } else if (formData.name.trim().length < 3) {
-      newErrors.name = "Name must be at least 3 characters long";
-      isValid = false;
-    } else if (/^[\d\W]/.test(formData.name.trim())) {
-      newErrors.name = "Name cannot start with a number or special character";
-      isValid = false;
-    }
-
-    // Email validation
-    if (!formData.email.trim()) {
-      newErrors.email = "Email is required";
-      isValid = false;
-    } else if (!/^\S+@\S+\.\S+$/.test(formData.email)) {
-      newErrors.email = "Email is invalid";
-      isValid = false;
-    }
-
-    // Child name validation
-    if (!formData.childName.trim()) {
-      newErrors.childName = "Child's name is required";
-      isValid = false;
-    } else if (formData.childName.trim().length < 3) {
-      newErrors.childName = "Child's name must be at least 3 characters long";
-      isValid = false;
-    } else if (/^[\d\W]/.test(formData.childName.trim())) {
-      newErrors.childName = "Child's name cannot start with a number or special character";
-      isValid = false;
-    }
-
-    // Feedback validation
-    if (!formData.feedback.trim()) {
-      newErrors.feedback = "Feedback is required";
-      isValid = false;
-    }
-
-    // Satisfaction validation
-    if (!formData.satisfaction.trim()) {
-      newErrors.satisfaction = "Satisfaction rating is required";
-      isValid = false;
+    // Check all fields for validation
+    for (const [name, value] of Object.entries(formData)) {
+      if (name === "satisfaction" && !value.trim()) {
+        newErrors[name as keyof typeof newErrors] =
+          "Satisfaction rating is required";
+        isValid = false;
+      } else if (name === "feedback" && !value.trim()) {
+        newErrors[name as keyof typeof newErrors] = "Feedback is required";
+        isValid = false;
+      } else if (!value.trim()) {
+        newErrors[name as keyof typeof newErrors] =
+          `${name.replace(/([A-Z])/g, " $1")} is required`;
+        isValid = false;
+      }
     }
 
     setErrors(newErrors);
@@ -177,7 +205,7 @@ const FeedbackForm = () => {
               required
             />
             {errors.name && (
-              <p className="text-[#FF0000] mt-1 text-sm">{errors.name}</p>
+              <p className="mt-1 text-sm text-[#FF0000]">{errors.name}</p>
             )}
           </div>
 
@@ -198,7 +226,7 @@ const FeedbackForm = () => {
               required
             />
             {errors.email && (
-              <p className="text-[#FF0000] mt-1 text-sm">{errors.email}</p>
+              <p className="mt-1 text-sm text-[#FF0000]">{errors.email}</p>
             )}
           </div>
         </div>
@@ -221,7 +249,7 @@ const FeedbackForm = () => {
               required
             />
             {errors.childName && (
-              <p className="text-[#FF0000] mt-1 text-sm">{errors.childName}</p>
+              <p className="mt-1 text-sm text-[#FF0000]">{errors.childName}</p>
             )}
           </div>
 
@@ -241,19 +269,21 @@ const FeedbackForm = () => {
               required
             >
               <option value="">Select Level</option>
-              <option value="1">1 - Very Unsatisfied</option>
-              <option value="2">2 - Unsatisfied</option>
+              <option value="1">1 - Very Dissatisfied</option>
+              <option value="2">2 - Dissatisfied</option>
               <option value="3">3 - Neutral</option>
               <option value="4">4 - Satisfied</option>
               <option value="5">5 - Very Satisfied</option>
             </select>
             {errors.satisfaction && (
-              <p className="text-[#FF0000] mt-1 text-sm">{errors.satisfaction}</p>
+              <p className="mt-1 text-sm text-[#FF0000]">
+                {errors.satisfaction}
+              </p>
             )}
           </div>
         </div>
 
-        <div className="mb-4">
+        <div className="my-4">
           <label
             htmlFor="feedback"
             className="text-gray-700 block text-sm font-medium"
@@ -263,30 +293,29 @@ const FeedbackForm = () => {
           <textarea
             name="feedback"
             id="feedback"
-            rows={4}
-            className="border-gray-300 mt-1 block w-full rounded-md border px-4 py-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
             value={formData.feedback}
             onChange={handleChange}
+            className="border-gray-300 mt-1 block w-full rounded-md border px-4 py-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+            rows={4}
             required
-          ></textarea>
+          />
           {errors.feedback && (
-            <p className="text-[#FF0000] mt-1 text-sm">{errors.feedback}</p>
+            <p className="mt-1 text-sm text-[#FF0000]">{errors.feedback}</p>
           )}
         </div>
 
-        {errorMessage && (
-          <p className="text-[#FF0000] mb-4 text-sm">{errorMessage}</p>
-        )}
-
-        <div className="flex justify-center">
+        <div className="my-4">
           <button
             type="submit"
-            className="bg-[#f15982] text-white py-2 px-4 rounded-md hover:bg-[#c0476c] focus:outline-none focus:ring-2 focus:ring-[#f15982] focus:ring-offset-2"
+            className="w-full rounded-lg bg-[#f15982] px-4 py-2 text-white hover:bg-[#d45271] focus:outline-none"
           >
-            Submit
+            Submit Feedback
           </button>
         </div>
       </form>
+      {errorMessage && (
+        <div className="mt-4 text-sm text-[#FF0000]">{errorMessage}</div>
+      )}
       <ToastContainer />
     </div>
   );
