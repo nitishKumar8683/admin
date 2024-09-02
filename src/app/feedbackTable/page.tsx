@@ -4,6 +4,7 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Pagination from "@/components/Pagination";
 
 interface Feedback {
   _id: string;
@@ -21,19 +22,29 @@ const FeedbackTable: React.FC = () => {
   );
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
-    fetch("/api/feedback/getFeedback")
-      .then((response) => response.json())
-      .then((data) => {
+    const fetchFeedbacks = async () => {
+      try {
+        const response = await fetch(
+          `/api/feedback/getFeedback?page=${currentPage}&limit=10`,
+        );
+        const data = await response.json();
         if (data.success && Array.isArray(data.data)) {
           setFeedbacks(data.data);
+          setTotalPages(data.totalPages);
         } else {
           console.error("Unexpected data format:", data);
         }
-      })
-      .catch((error) => console.error("Error fetching feedback:", error));
-  }, []);
+      } catch (error) {
+        console.error("Error fetching feedback:", error);
+      }
+    };
+
+    fetchFeedbacks();
+  }, [currentPage]);
 
   const handleEdit = (feedback: Feedback) => {
     setSelectedFeedback(feedback);
@@ -53,16 +64,13 @@ const FeedbackTable: React.FC = () => {
       .then((response) => response.json())
       .then((data) => {
         if (data.success) {
-          console.log("Feedback deleted successfully");
           toast.success("Feedback deleted successfully!");
           setFeedbacks(feedbacks.filter((feedback) => feedback._id !== id));
         } else {
-          console.error("Error deleting feedback:", data.error);
           toast.error("Error deleting feedback: " + data.error);
         }
       })
       .catch((error) => {
-        console.error("Error:", error);
         toast.error("Error deleting feedback: " + error.message);
       });
   };
@@ -85,7 +93,6 @@ const FeedbackTable: React.FC = () => {
         .then((response) => response.json())
         .then((data) => {
           if (data.success) {
-            console.log("Feedback updated successfully");
             setFeedbacks(
               feedbacks.map((feedback) =>
                 feedback._id === selectedFeedback._id
@@ -113,23 +120,27 @@ const FeedbackTable: React.FC = () => {
     }
   };
 
+  const handlePageChange = (page: number) => {
+    if (page >= 1 && page <= totalPages) {
+      setCurrentPage(page);
+    }
+  };
+
+
   return (
     <DefaultLayout>
-      {/* Apply blur and opacity reduction when dialog is open */}
       <div
         className={`rounded-sm border border-stroke bg-white px-4 py-6 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-6 xl:py-4 ${
           isDialogOpen ? "opacity-50 blur-sm" : ""
         } transition-all duration-300`}
       >
-        {/* <h1 className="mb-6 text-center text-lg font-bold text-black dark:text-white sm:text-xl md:text-2xl">
-          Submitted Feedback
-        </h1> */}
+        
         <div className="overflow-x-auto">
           <table className="divide-gray-200 min-w-full divide-y">
             <thead className="bg-gray-100">
               <tr>
                 <th className="px-4 py-2 text-left text-xs font-medium text-black dark:text-white sm:text-sm md:text-base">
-                  Guardian's Name
+                  Guardians Name
                 </th>
                 <th className="px-4 py-2 text-left text-xs font-medium text-black dark:text-white sm:text-sm md:text-base">
                   Email
@@ -218,6 +229,12 @@ const FeedbackTable: React.FC = () => {
               ))}
             </tbody>
           </table>
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
+          />
+          
         </div>
       </div>
 
@@ -327,7 +344,6 @@ const FeedbackTable: React.FC = () => {
           </div>
         </div>
       )}
-
       <ToastContainer />
     </DefaultLayout>
   );
