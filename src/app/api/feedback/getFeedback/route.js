@@ -1,43 +1,38 @@
-import { connect } from "@/db/dbConfig";
-import Feedback from "@/models/feedbackModel";
-import { NextResponse } from "next/server";
+import { connect, pool } from "@/db/dbConfig";
+import { NextRequest, NextResponse } from "next/server";
 
-// Connect to the database
 export async function GET(request) {
   try {
+    // Connect to the database
     await connect();
 
-    // Get page and limit from query parameters, defaulting to 1 and 10
-    const { searchParams } = new URL(request.url);
-    const page = parseInt(searchParams.get("page") || "1", 10);
-    const limit = parseInt(searchParams.get("limit") || "10", 5);
+    // SQL query to fetch all feedbacks without pagination
+    const feedbacks = await new Promise((resolve, reject) => {
+      pool.query("SELECT * FROM feedbackData", (err, results) => {
+        if (err) {
+          console.error("Query error:", err);
+          reject(err);
+        } else {
+          resolve(results);
+        }
+      });
+    });
 
-    // Calculate the number of documents to skip
-    const skip = (page - 1) * limit;
+    console.log("Feedbacks fetched:", feedbacks);
 
-    // Fetch feedbacks with pagination
-    const feedbacks = await Feedback.find({}).skip(skip).limit(limit);
-
-    // Count total documents in the collection
-    const totalDocuments = await Feedback.countDocuments({});
-
-    // Calculate total number of pages
-    const totalPages = Math.ceil(totalDocuments / limit);
-
-    // Return the feedbacks, current page, and total pages
+    // Return the feedbacks
     return NextResponse.json(
       {
         success: true,
         data: feedbacks,
-        currentPage: page,
-        totalPages,
       },
       { status: 200 },
     );
   } catch (error) {
+    console.error("Error fetching feedbacks:", error.message);
     return NextResponse.json(
-      { success: false, error: error.message },
-      { status: 400 },
+      { success: false, error: "Internal Server Error" },
+      { status: 500 },
     );
   }
 }
