@@ -1,26 +1,33 @@
-import { connect } from "@/db/dbConfig";
-import User from "@/models/userModel";
-import { NextRequest, NextResponse } from "next/server";
+import { connect, pool } from "@/db/dbConfig";
 import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken";
-
-connect();
+import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request) {
   try {
+    // Parse request body
     const reqBody = await request.json();
     const { email, password } = reqBody;
 
-    const user = await User.findOne({ email });
+    // Connect to the database
+    await connect();
+
+    // Check if user exists
+    const [userResults] = await pool
+      .promise()
+      .query("SELECT * FROM users WHERE email = ?", [email]);
+    const user = userResults[0]; // Assuming only one user with that email
+
     if (!user) {
       console.log(user);
       return NextResponse.json(
-        { message: "User does not exists" },
+        { message: "User does not exist" },
         { status: 400 },
       );
     }
-    console.log("user exits");
+    console.log("User exists");
 
+    // Validate password
     const validPassword = await bcryptjs.compare(password, user.password);
     if (!validPassword) {
       return NextResponse.json(
@@ -29,30 +36,32 @@ export async function POST(request) {
       );
     }
 
+    // Create JWT token
     const tokenData = {
-      id: user._id,
+      id: user.id, // Use `user.id` or the appropriate column name
       name: user.name,
       email: user.email,
       role: user.role,
     };
 
-    const token = await jwt.sign(tokenData, process.env.TOKEN_SECRET, {
-      expiresIn: "1h",
+    const token = jwt.sign(tokenData, process.env.TOKEN_SECRET, {
+      expiresIn: "1d",
     });
-    
 
+    // Create response
     const response = NextResponse.json({
-      message: "Login Successfull",
+      message: "Login Successful",
       success: true,
       tokenData,
     });
 
+    // Set cookies
     response.cookies.set("token", token, { httpOnly: true, path: "/" });
-
     response.cookies.set("role", user.role, { httpOnly: false, path: "/" });
 
     return response;
   } catch (error) {
+    console.error("Error during login:", error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
