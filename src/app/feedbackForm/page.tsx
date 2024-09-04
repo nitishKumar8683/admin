@@ -10,7 +10,7 @@ const FeedbackForm = () => {
     name: "",
     email: "",
     childName: "",
-    feedback: "",
+    feedbackText: "",
     satisfaction: "",
   });
 
@@ -18,7 +18,7 @@ const FeedbackForm = () => {
     name: "",
     email: "",
     childName: "",
-    feedback: "",
+    feedbackText: "",
     satisfaction: "",
   });
 
@@ -75,11 +75,11 @@ const FeedbackForm = () => {
           newErrors.childName = "";
         }
         break;
-      case "feedback":
+      case "feedbackText":
         if (!value.trim()) {
-          newErrors.feedback = "Feedback is required";
+          newErrors.feedbackText = "Feedback is required";
         } else {
-          newErrors.feedback = "";
+          newErrors.feedbackText = "";
         }
         break;
       case "satisfaction":
@@ -98,7 +98,7 @@ const FeedbackForm = () => {
       name: "",
       email: "",
       childName: "",
-      feedback: "",
+      feedbackText: "",
       satisfaction: "",
     };
     let isValid = true;
@@ -109,7 +109,7 @@ const FeedbackForm = () => {
         newErrors[name as keyof typeof newErrors] =
           "Satisfaction rating is required";
         isValid = false;
-      } else if (name === "feedback" && !value.trim()) {
+      } else if (name === "feedbackText" && !value.trim()) {
         newErrors[name as keyof typeof newErrors] = "Feedback is required";
         isValid = false;
       } else if (!value.trim()) {
@@ -132,7 +132,7 @@ const FeedbackForm = () => {
     }
 
     try {
-      const response = await fetch("/api/feedback/createFeedback/", {
+      const response = await fetch("/api/feedback/createFeedback", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -146,17 +146,17 @@ const FeedbackForm = () => {
           name: "",
           email: "",
           childName: "",
-          feedback: "",
+          feedbackText: "",
           satisfaction: "",
         });
         setErrors({
           name: "",
           email: "",
           childName: "",
-          feedback: "",
+          feedbackText: "",
           satisfaction: "",
         });
-        setErrorMessage(""); // Clear error message on success
+        setErrorMessage(""); 
       } else {
         setErrorMessage("Failed to submit feedback.");
       }
@@ -285,22 +285,22 @@ const FeedbackForm = () => {
 
         <div className="my-4">
           <label
-            htmlFor="feedback"
+            htmlFor="feedbackText"
             className="text-gray-700 block text-sm font-medium"
           >
             Feedback
           </label>
           <textarea
-            name="feedback"
-            id="feedback"
-            value={formData.feedback}
+            name="feedbackText"
+            id="feedbackText"
+            value={formData.feedbackText}
             onChange={handleChange}
             className="border-gray-300 mt-1 block w-full rounded-md border px-4 py-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
             rows={4}
             required
           />
-          {errors.feedback && (
-            <p className="mt-1 text-sm text-[#FF0000]">{errors.feedback}</p>
+          {errors.feedbackText && (
+            <p className="mt-1 text-sm text-[#FF0000]">{errors.feedbackText}</p>
           )}
         </div>
 
