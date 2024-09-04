@@ -23,6 +23,7 @@
     "bootstrap-icons": "^1.11.3",
     "cloudinary": "^2.3.0",
     "date-fns": "^3.6.0",
+    "dotenv": "^16.4.5",
     "flatpickr": "^4.6.13",
     "formidable": "^3.5.1",
     "formik": "^2.4.6",
@@ -30,6 +31,7 @@
     "jsonwebtoken": "^9.0.2",
     "jsvectormap": "^1.6.0",
     "mongoose": "^8.5.1",
+    "mysql2": "^3.11.0",
     "next": "^14.2.6",
     "next-cloudinary": "^6.6.2",
     "next-connect": "^1.0.0",
@@ -51,6 +53,7 @@
     "react-spinners": "^0.14.1",
     "react-time-picker": "^7.0.0",
     "react-toastify": "^10.0.5",
+    "sequelize": "^6.37.3",
     "yup": "^1.4.0"
   },
   "devDependencies": {
