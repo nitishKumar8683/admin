@@ -1,20 +1,37 @@
-import mongoose from "mongoose";
+import mysql from "mysql2";
+import dotenv from "dotenv";
 
-export async function connect() {
-    try {
-        mongoose.connect(process.env.MONGO_URI);
-        const connection = mongoose.connection
+// Load environment variables from .env file
+dotenv.config();
 
-        connection.on('connected' , () => {
-            console.log("MongoDb Connected successfully ");
-        })
+// Create a connection pool
+const pool = mysql.createPool({
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+});
 
-        connection.on("error", (err) => {
-            console.log("Errorr" + err);
-            process.exit();
-        });
-    } catch (error) {
-        console.log("Something goes wrong!");
-        console.log(error);
-    }
+// Wrap the pool's getConnection method in a Promise
+export function connect() {
+  return new Promise((resolve, reject) => {
+    pool.getConnection((err, connection) => {
+      if (err) {
+        console.error("Error connecting to MySQL: ", err);
+        reject(err);
+        return;
+      }
+
+      // Log connection success
+      console.log("MySQL Connected successfully");
+
+      // Release the connection back to the pool
+      connection.release();
+      resolve();
+    });
+  });
 }
+
+// Export the pool for direct use if needed
+export { pool };
